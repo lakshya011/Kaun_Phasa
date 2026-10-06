@@ -5,198 +5,262 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <style>:root{color-scheme:light}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
 <title>Kaun Phasa?</title>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Yatra+One&family=Baloo+2:wght@400;500;600;700;800&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&display=swap">
 <style>
-/* Layout: a dark "shaadi night" ledger. Particle marquee on top, scoreboard strip, a dated timeline, then a three-column roster. */
+/* Identity: an Indian wedding card at night. Aubergine ground, gold foil type, marigold toran along the top.
+   IA: the next baraats are the hero object (invitation cards), then the batch register, then the hall of fame. */
 :root {
-  --bg: #f6f2ff;
-  --bg-2: #ece6fb;
-  --surface: #ffffff;
-  --line: #d9d1f0;
-  --fg: #22193f;
-  --muted: #6d6687;
-  --accent: #d48d06;        /* genda / marigold */
-  --accent-ink: #1e1500;
-  --married: #2a8a56;       /* mehendi */
-  --engaged: #cf3f2a;       /* sindoor */
-  --single: #6f6a8a;        /* ash */
-  --rubble: #b6afd1;
-  --shadow: 0 10px 30px rgba(50, 30, 110, .12);
-  --display: "Yatra One", "Baloo 2", "Segoe UI", system-ui, sans-serif;
-  --body: "Baloo 2", "Segoe UI", system-ui, -apple-system, sans-serif;
+  --paper: #f7f1e6;        /* ivory card stock */
+  --paper-2: #efe6d6;
+  --ink: #2a1230;          /* aubergine ink */
+  --ink-2: #5b4762;
+  --line: #d9c9b4;
+  --gold: #a8782b;
+  --gold-2: #d2ad5e;
+  --marigold: #ef9f2a;
+  --sindoor: #c93a4a;
+  --mehendi: #3f8a55;
+  --ash: #8a7f93;
+  --rubble: #d6c8b0;
+  --card: #fffaf1;
+  --shadow: 0 18px 40px -20px rgba(42, 18, 48, .35);
+  --display: "Fraunces", "Iowan Old Style", "Palatino", Georgia, serif;
+  --body: "DM Sans", "Segoe UI", system-ui, -apple-system, sans-serif;
   color-scheme: light;
 }
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
-    --bg: #171231; --bg-2: #1f1840; --surface: #251c4a; --line: #3a2f6a;
-    --fg: #f6efe0; --muted: #a79fc6; --accent: #f5b82e; --accent-ink: #1e1500;
-    --married: #4fc17f; --engaged: #ff6a52; --single: #a39dc2; --rubble: #4a4170;
-    --shadow: 0 10px 30px rgba(0, 0, 0, .35);
+    --paper: #1b0f21; --paper-2: #24142c; --ink: #f5ead8; --ink-2: #c9b7cc; --line: #3d2a45;
+    --gold: #d4a84f; --gold-2: #f0cf85; --marigold: #f4a63a; --sindoor: #ef5a6b; --mehendi: #62b67a; --ash: #9d90a6;
+    --rubble: #3a2a42; --card: #241530; --shadow: 0 18px 40px -20px rgba(0, 0, 0, .7);
     color-scheme: dark;
   }
 }
 :root[data-theme="dark"] {
-  --bg: #171231; --bg-2: #1f1840; --surface: #251c4a; --line: #3a2f6a;
-  --fg: #f6efe0; --muted: #a79fc6; --accent: #f5b82e; --accent-ink: #1e1500;
-  --married: #4fc17f; --engaged: #ff6a52; --single: #a39dc2; --rubble: #4a4170;
-  --shadow: 0 10px 30px rgba(0, 0, 0, .35);
+  --paper: #1b0f21; --paper-2: #24142c; --ink: #f5ead8; --ink-2: #c9b7cc; --line: #3d2a45;
+  --gold: #d4a84f; --gold-2: #f0cf85; --marigold: #f4a63a; --sindoor: #ef5a6b; --mehendi: #62b67a; --ash: #9d90a6;
+  --rubble: #3a2a42; --card: #241530; --shadow: 0 18px 40px -20px rgba(0, 0, 0, .7);
   color-scheme: dark;
 }
 
 * { box-sizing: border-box; }
 [hidden] { display: none !important; }
-body {
-  background: var(--bg);
-  color: var(--fg);
-  font-family: var(--body);
-  font-size: 16px;
-  line-height: 1.45;
-  margin: 0;
-}
-.wrap { max-width: 1120px; margin: 0 auto; padding-inline: 16px; padding-block: 0 48px; }
-h1, h2, h3 { text-wrap: balance; margin: 0; }
-h2 { font-family: var(--display); font-weight: 400; font-size: clamp(1.4rem, 2.6vw, 1.9rem); letter-spacing: .01em; }
-.eyebrow { text-transform: uppercase; letter-spacing: .14em; font-size: .72rem; font-weight: 700; color: var(--muted); }
-button { font: inherit; cursor: pointer; }
-button:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible, .card:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+body { margin: 0; background: var(--paper); color: var(--ink); font-family: var(--body); font-size: 16px; line-height: 1.5; -webkit-font-smoothing: antialiased; }
+.wrap { max-width: 1160px; margin: 0 auto; padding-inline: clamp(16px, 4vw, 40px); padding-block: 0 64px; }
+h1, h2, h3, p { margin: 0; }
+h2 { font-family: var(--display); font-weight: 400; font-size: clamp(1.9rem, 4vw, 2.8rem); line-height: 1.05; letter-spacing: -.01em; text-wrap: balance; }
+h2 em { font-style: italic; color: var(--gold); }
+.eyebrow { font-size: .76rem; font-weight: 600; letter-spacing: .18em; text-transform: uppercase; color: var(--gold); }
+.lede { color: var(--ink-2); max-width: 46ch; }
+button { font: inherit; cursor: pointer; color: inherit; }
+:is(button, input, select, textarea, a, [tabindex]):focus-visible { outline: 2px solid var(--gold-2); outline-offset: 3px; border-radius: 4px; }
+.num { font-family: var(--display); font-variant-numeric: tabular-nums lining-nums; }
+
+/* Toran: marigold garland along the top edge */
+.toran { height: 22px; background:
+  radial-gradient(circle at 10px 8px, var(--marigold) 0 5px, transparent 5.5px),
+  radial-gradient(circle at 30px 11px, #f6c84f 0 4px, transparent 4.5px),
+  radial-gradient(circle at 20px 16px, var(--mehendi) 0 2.5px, transparent 3px),
+  radial-gradient(circle at 40px 16px, var(--mehendi) 0 2.5px, transparent 3px);
+  background-size: 40px 22px; background-repeat: repeat-x; position: relative; }
+.toran::before { content: ""; position: absolute; inset: 1px 0 auto 0; height: 1px; background: var(--gold); opacity: .6; }
+
+/* Masthead */
+.mast { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding-block: 18px 6px; flex-wrap: wrap; }
+.mast .brand { font-size: .92rem; font-weight: 600; letter-spacing: .04em; color: var(--ink-2); }
+.theme { display: inline-flex; border: 1px solid var(--line); border-radius: 999px; padding: 3px; background: var(--paper-2); gap: 2px; }
+.theme .opt { border: 0; background: transparent; border-radius: 999px; padding: 6px 12px; font-size: .82rem; font-weight: 600; letter-spacing: .04em; color: var(--ink-2); display: inline-flex; gap: 6px; align-items: center; }
+.theme .opt span { color: var(--gold); }
+.theme .opt.on { background: var(--ink); color: var(--paper); }
+.theme .opt.on span { color: var(--gold-2); }
+.mast .season { font-size: .78rem; letter-spacing: .14em; text-transform: uppercase; color: var(--ink-2); border: 1px solid var(--line); border-radius: 999px; padding: 6px 12px; }
 
 /* Hero */
-.hero { position: relative; height: 300px; overflow: hidden; background: linear-gradient(180deg, var(--bg-2), var(--bg)); }
+.hero { position: relative; display: grid; grid-template-columns: 1.2fr .8fr; gap: 24px; align-items: end; padding-block: 8px 40px; border-bottom: 1px solid var(--line); }
+.hero .stage { position: relative; height: clamp(200px, 32vw, 320px); min-width: 0; }
 .hero canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
-.hero .fallback { position: absolute; inset: 0; display: grid; place-items: center; font-family: var(--display); font-size: clamp(2.6rem, 9vw, 6rem); color: var(--accent); text-align: center; pointer-events: none; opacity: 0; }
+.hero .fallback { position: absolute; inset: 0; display: grid; place-items: center; font-family: var(--display); font-size: clamp(3rem, 10vw, 7rem); color: var(--gold); opacity: 0; pointer-events: none; }
 .hero.no-canvas .fallback { opacity: 1; }
-.tagline { text-align: center; padding-block: 18px 8px; color: var(--muted); font-size: 1.05rem; }
-.tagline strong { color: var(--fg); font-weight: 600; }
-
-/* Scoreboard */
-.score { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px; margin-top: 18px; }
-.tile { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 14px 16px; min-width: 0; }
-.tile .num { font-family: var(--display); font-size: 2.4rem; line-height: 1; font-variant-numeric: tabular-nums; }
-.tile .lbl { color: var(--muted); font-weight: 600; margin-top: 4px; }
-.tile.next { grid-column: span 2; border-color: var(--accent); background: linear-gradient(135deg, color-mix(in srgb, var(--accent) 18%, var(--surface)), var(--surface)); }
-.tile.next .num { font-size: 1.6rem; line-height: 1.2; }
-.tile.married .num { color: var(--married); }
-.tile.engaged .num { color: var(--engaged); }
-.tile.single .num { color: var(--single); }
-@media (max-width: 520px) { .tile.next { grid-column: 1 / -1; } }
+.hero .intro { min-width: 0; display: grid; gap: 18px; padding-bottom: 6px; }
+.hero .intro p { font-size: 1.1rem; color: var(--ink-2); max-width: 40ch; }
+.hero .intro p strong { color: var(--ink); font-weight: 600; }
+.nextup { border-top: 1px solid var(--gold); padding-top: 14px; display: grid; gap: 4px; }
+.nextup .big { font-family: var(--display); font-size: clamp(1.6rem, 3vw, 2.2rem); line-height: 1.1; }
+.nextup .big i { color: var(--gold); }
+.nextup .sub { color: var(--ink-2); }
+.tally { display: flex; gap: 28px; flex-wrap: wrap; }
+.tally div { display: grid; }
+.tally .num { font-size: 2.2rem; line-height: 1; }
+.tally small { font-size: .78rem; letter-spacing: .12em; text-transform: uppercase; color: var(--ink-2); font-weight: 600; margin-top: 4px; }
+.tally .married .num { color: var(--mehendi); } .tally .engaged .num { color: var(--sindoor); } .tally .single .num { color: var(--ash); }
+@media (max-width: 820px) { .hero { grid-template-columns: 1fr; } .hero .stage { height: clamp(160px, 42vw, 260px); } }
 
 /* Sections */
-section { margin-top: 40px; }
-.sec-head { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; flex-wrap: wrap; margin-bottom: 14px; }
-.sec-head p { margin: 0; color: var(--muted); }
+section { padding-block: 48px 0; }
+.sec-head { display: grid; gap: 10px; margin-bottom: 26px; }
+.sec-head .row { display: flex; justify-content: space-between; align-items: flex-end; gap: 16px; flex-wrap: wrap; }
 
-/* Timeline */
-.timeline { display: grid; gap: 10px; }
-.ev { display: grid; grid-template-columns: 68px 1fr auto; gap: 14px; align-items: center; background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 12px 14px; min-width: 0; }
-.ev .date { text-align: center; border-right: 1px solid var(--line); padding-right: 12px; }
-.ev .date .d { font-family: var(--display); font-size: 1.7rem; line-height: 1; font-variant-numeric: tabular-nums; }
-.ev .date .m { text-transform: uppercase; font-size: .72rem; letter-spacing: .12em; color: var(--muted); font-weight: 700; }
-.ev .what { min-width: 0; }
-.ev .what .t { font-weight: 700; }
-.ev .what .t span { color: var(--muted); font-weight: 500; }
-.ev .what .w { color: var(--muted); font-size: .92rem; overflow-wrap: anywhere; }
-.chip { display: inline-block; border-radius: 999px; padding: 3px 10px; font-size: .78rem; font-weight: 700; white-space: nowrap; border: 1px solid transparent; }
-.chip.soon { background: var(--accent); color: var(--accent-ink); }
-.chip.far { background: var(--bg-2); color: var(--fg); border-color: var(--line); }
-.chip.done { background: var(--bg-2); color: var(--muted); border-color: var(--line); }
-.chip.tba { background: color-mix(in srgb, var(--engaged) 15%, var(--surface)); color: var(--engaged); border-color: color-mix(in srgb, var(--engaged) 40%, transparent); }
-.ev.tba .date .d { font-size: 1.3rem; color: var(--engaged); }
-.empty { background: var(--surface); border: 1px dashed var(--line); border-radius: 14px; padding: 18px; color: var(--muted); text-align: center; }
-@media (max-width: 520px) { .ev { grid-template-columns: 56px 1fr; } .ev .chip { grid-column: 2; justify-self: start; } }
+/* Invitation cards */
+.invites { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 18px; }
+.invite { position: relative; background: var(--card); border: 1px solid var(--line); border-radius: 6px; padding: 22px 22px 18px; display: grid; gap: 14px; min-width: 0; box-shadow: var(--shadow); overflow: hidden; }
+.invite::before { content: ""; position: absolute; inset: 6px; border: 1px solid var(--gold); opacity: .55; pointer-events: none; border-radius: 3px; }
+.invite::after { content: ""; position: absolute; top: 0; left: 0; right: 0; height: 4px; background: linear-gradient(90deg, var(--gold), var(--gold-2), var(--gold)); }
+.invite .top { display: flex; justify-content: space-between; align-items: flex-start; gap: 10px; }
+.invite .city { font-size: .8rem; letter-spacing: .14em; text-transform: uppercase; color: var(--ink-2); font-weight: 600; }
+.invite .name { font-family: var(--display); font-size: clamp(1.7rem, 2.4vw, 2.1rem); line-height: 1.05; }
+.invite .when { display: flex; align-items: baseline; gap: 8px; }
+.invite .when .num { font-size: 3rem; line-height: .9; }
+.invite .when .mon { font-family: var(--display); font-style: italic; font-size: 1.35rem; color: var(--gold); }
+.invite .when .yr { color: var(--ink-2); font-size: .9rem; margin-left: auto; }
+.invite .events { display: grid; gap: 6px; border-top: 1px dashed var(--line); padding-top: 12px; }
+.invite .events div { display: grid; grid-template-columns: 56px 1fr; gap: 10px; font-size: .92rem; }
+.invite .events b { font-weight: 600; color: var(--ink-2); font-variant-numeric: tabular-nums; }
+.invite .events span { min-width: 0; overflow-wrap: anywhere; }
+.invite .note { font-size: .92rem; color: var(--ink-2); }
+.stamp { font-size: .74rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; border: 1.5px solid currentColor; border-radius: 3px; padding: 4px 8px; transform: rotate(-4deg); white-space: nowrap; }
+.stamp.soon { color: var(--sindoor); } .stamp.far { color: var(--gold); } .stamp.tba { color: var(--ash); border-style: dashed; } .stamp.done { color: var(--mehendi); }
+.invite.tba .when .num { color: var(--ash); font-size: 2.4rem; }
+.invite.editable { cursor: pointer; } .invite.editable:hover { border-color: var(--gold); }
+.empty { border: 1px dashed var(--line); border-radius: 6px; padding: 28px; text-align: center; color: var(--ink-2); font-size: 1rem; }
 
-/* Roster */
-.roster { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
-@media (max-width: 860px) { .roster { grid-template-columns: 1fr; } }
-.col { background: var(--bg-2); border-radius: 18px; padding: 14px; min-width: 0; }
-.col-head { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-bottom: 12px; }
-.col-head h3 { font-family: var(--display); font-weight: 400; font-size: 1.25rem; }
-.col-head .count { font-variant-numeric: tabular-nums; font-weight: 800; border-radius: 999px; padding: 2px 10px; background: var(--surface); border: 1px solid var(--line); }
-.col.married .col-head h3 { color: var(--married); }
-.col.engaged .col-head h3 { color: var(--engaged); }
-.col.single .col-head h3 { color: var(--single); }
-.cards { display: grid; gap: 8px; }
-.card { display: grid; grid-template-columns: 40px 1fr; gap: 10px; align-items: center; background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 10px 12px; min-width: 0; text-align: left; color: inherit; width: 100%; }
-.card.editable { cursor: pointer; }
-.card.editable:hover { border-color: var(--accent); }
-.av { width: 40px; height: 40px; border-radius: 50%; display: grid; place-items: center; font-weight: 800; font-size: .9rem; color: #fff; }
-.col.married .av { background: var(--married); }
-.col.engaged .av { background: var(--engaged); }
-.col.single .av { background: var(--single); }
-.card .n { font-weight: 700; line-height: 1.2; }
-.card .q { color: var(--muted); font-size: .88rem; line-height: 1.3; overflow-wrap: anywhere; }
-.card .q b { color: var(--fg); font-weight: 600; }
-.col-empty { color: var(--muted); font-size: .9rem; padding: 10px; text-align: center; }
+/* Register */
+.register { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0; border-top: 1px solid var(--line); }
+.col { min-width: 0; padding: 22px 22px 10px; border-right: 1px solid var(--line); }
+.col:last-child { border-right: 0; }
+.col-head { display: grid; gap: 2px; margin-bottom: 14px; }
+.col-head .num { font-size: 2.8rem; line-height: 1; }
+.col-head h3 { font-size: .78rem; letter-spacing: .16em; text-transform: uppercase; font-weight: 600; }
+.col-head p { font-size: .9rem; color: var(--ink-2); }
+.col.married .num, .col.married h3 { color: var(--mehendi); }
+.col.engaged .num, .col.engaged h3 { color: var(--sindoor); }
+.col.single .num, .col.single h3 { color: var(--ash); }
+.people { display: grid; }
+.person { display: grid; grid-template-columns: 38px 1fr; gap: 12px; align-items: center; padding: 10px 0; border-top: 1px solid var(--line); text-align: left; background: none; border-left: 0; border-right: 0; border-bottom: 0; width: 100%; min-width: 0; }
+.person.editable { cursor: pointer; } .person.editable:hover .n { color: var(--gold); }
+.mono { width: 38px; height: 38px; border-radius: 50%; display: grid; place-items: center; font-family: var(--display); font-size: .95rem; border: 1.5px solid; }
+.col.married .mono { color: var(--mehendi); } .col.engaged .mono { color: var(--sindoor); } .col.single .mono { color: var(--ash); }
+.person .n { font-weight: 600; line-height: 1.2; }
+.person .m { font-size: .9rem; color: var(--ink-2); line-height: 1.4; overflow-wrap: anywhere; }
+.person .m i { font-style: normal; }
+.col-empty { padding: 14px 0; color: var(--ink-2); }
+@media (max-width: 900px) { .register { grid-template-columns: 1fr; } .col { border-right: 0; border-bottom: 1px solid var(--line); padding-inline: 0; } .col:last-child { border-bottom: 0; } }
 
-/* Quirks footer */
-.quirks { margin-top: 44px; text-align: center; border-top: 1px solid var(--line); padding-top: 22px; }
-.quirks .line { font-family: var(--display); font-size: clamp(1.1rem, 2.4vw, 1.5rem); color: var(--accent); min-height: 2.2em; transition: opacity .4s; }
-.quirks .meta { color: var(--muted); font-size: .85rem; margin-top: 10px; }
-@media (prefers-reduced-motion: reduce) { .quirks .line { transition: none; } }
+/* Hall of fame: a dot-built timeline */
+.fame-scroll { overflow-x: auto; overflow-y: hidden; padding-bottom: 6px; -webkit-overflow-scrolling: touch; }
+.fame-stage { position: relative; height: 280px; min-width: 100%; }
+.fame-stage canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+.fame-labels { position: absolute; inset: 0; pointer-events: none; }
+.fame-labels .yr { position: absolute; top: 18px; transform: translateX(-50%); font-family: var(--display); font-size: 1.15rem; color: var(--gold); white-space: nowrap; }
+.fame-labels .lbl { position: absolute; top: 170px; width: 120px; transform: translateX(-50%); text-align: center; }
+.fame-labels .lbl b { display: block; font-weight: 600; font-size: .92rem; line-height: 1.2; }
+.fame-labels .lbl span { display: block; font-size: .8rem; color: var(--ink-2); margin-top: 2px; }
+.fame-undated { margin-top: 10px; font-size: .9rem; color: var(--ink-2); }
+.fame-undated b { font-weight: 600; color: var(--ink); }
 
-/* Owner bar + drawer */
-.ownerbar { display: flex; gap: 10px; align-items: center; justify-content: space-between; flex-wrap: wrap; background: var(--surface); border: 1px solid var(--accent); border-radius: 12px; padding: 10px 14px; margin-top: 18px; }
-.ownerbar p { margin: 0; color: var(--muted); font-size: .92rem; }
-.btn { border: 1px solid var(--line); background: var(--surface); color: var(--fg); border-radius: 10px; padding: 8px 14px; font-weight: 700; }
-.btn.primary { background: var(--accent); color: var(--accent-ink); border-color: transparent; }
-.btn.danger { color: var(--engaged); border-color: color-mix(in srgb, var(--engaged) 50%, transparent); }
-.btn.small { padding: 4px 10px; font-size: .85rem; }
+/* Quirk */
+.quirk { margin-top: 64px; text-align: center; display: grid; gap: 14px; justify-items: center; }
+.quirk .q { font-family: var(--display); font-style: italic; font-size: clamp(1.4rem, 3vw, 2rem); line-height: 1.25; max-width: 28ch; text-wrap: balance; transition: opacity .5s; }
+.quirk .q::before { content: "“"; color: var(--gold); }
+.quirk .q::after { content: "”"; color: var(--gold); }
+.quirk .meta { font-size: .78rem; letter-spacing: .12em; text-transform: uppercase; color: var(--ink-2); }
+.rule { width: 60px; height: 1px; background: var(--gold); position: relative; }
+.rule::after { content: ""; position: absolute; left: 50%; top: -3px; width: 7px; height: 7px; background: var(--gold); transform: translateX(-50%) rotate(45deg); }
+@media (prefers-reduced-motion: reduce) { .quirk .q { transition: none; } }
+
+/* Admin */
+.adminbar { display: flex; gap: 12px; align-items: center; justify-content: space-between; flex-wrap: wrap; background: var(--paper-2); border: 1px solid var(--gold); border-radius: 6px; padding: 10px 14px; margin-top: 18px; font-size: .92rem; color: var(--ink-2); }
+.btn { border: 1px solid var(--line); background: var(--card); border-radius: 4px; padding: 8px 14px; font-weight: 600; font-size: .9rem; letter-spacing: .02em; }
+.btn.primary { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+.btn.danger { color: var(--sindoor); }
+.btn.small { padding: 5px 10px; font-size: .82rem; }
 .btn:disabled { opacity: .5; cursor: default; }
-.drawer-bg { position: fixed; inset: 0; background: rgba(10, 5, 30, .55); z-index: 20; }
-.drawer { position: fixed; top: 0; right: 0; bottom: 0; width: min(520px, 100%); background: var(--bg); z-index: 21; overflow-y: auto; padding: 18px 18px calc(18px + env(safe-area-inset-bottom, 0px)); padding-top: calc(18px + env(safe-area-inset-top, 0px)); box-shadow: var(--shadow); }
-.drawer h2 { margin-bottom: 12px; }
-.field { display: grid; gap: 4px; margin-bottom: 12px; }
-.field label { font-size: .8rem; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: .08em; }
-.field input, .field select, .field textarea { font: inherit; padding: 8px 10px; border-radius: 10px; border: 1px solid var(--line); background: var(--surface); color: var(--fg); width: 100%; }
-.row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.drawer-bg { position: fixed; inset: 0; background: rgba(20, 8, 24, .6); z-index: 20; }
+.drawer { position: fixed; top: 0; right: 0; bottom: 0; width: min(520px, 100%); background: var(--paper); z-index: 21; overflow-y: auto; padding: 22px 22px calc(22px + env(safe-area-inset-bottom, 0px)); padding-top: calc(22px + env(safe-area-inset-top, 0px)); border-left: 1px solid var(--line); }
+.drawer h2 { font-size: 1.8rem; margin-bottom: 18px; }
+.field { display: grid; gap: 5px; margin-bottom: 14px; }
+.field label { font-size: .72rem; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; color: var(--ink-2); }
+.field :is(input, select, textarea) { font: inherit; padding: 9px 11px; border-radius: 4px; border: 1px solid var(--line); background: var(--card); color: var(--ink); width: 100%; }
+.row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
 @media (max-width: 420px) { .row2 { grid-template-columns: 1fr; } }
 .evrows { display: grid; gap: 8px; }
-.evrow { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 8px; }
-.evrow input, .evrow select { font: inherit; padding: 6px 8px; border-radius: 8px; border: 1px solid var(--line); background: var(--bg); color: var(--fg); width: 100%; min-width: 0; }
+.evrow { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; background: var(--card); border: 1px solid var(--line); border-radius: 4px; padding: 8px; }
+.evrow :is(input, select) { font: inherit; font-size: .9rem; padding: 6px 8px; border-radius: 4px; border: 1px solid var(--line); background: var(--paper); color: var(--ink); width: 100%; min-width: 0; }
 .evrow .full { grid-column: 1 / -1; }
-.drawer-actions { display: flex; gap: 8px; flex-wrap: wrap; justify-content: space-between; margin-top: 16px; }
-.status-msg { margin-top: 10px; font-size: .9rem; color: var(--muted); min-height: 1.3em; }
-.status-msg.err { color: var(--engaged); }
+.drawer-actions { display: flex; gap: 8px; flex-wrap: wrap; justify-content: space-between; margin-top: 18px; }
+.status-msg { margin-top: 10px; font-size: .9rem; color: var(--ink-2); min-height: 1.3em; }
+.status-msg.err { color: var(--sindoor); }
 </style>
 
 </head>
 <body>
-<header class="hero" id="hero">
-  <canvas id="dots" aria-hidden="true"></canvas>
-  <div class="fallback">Kaun Phasa?</div>
-  <h1 class="sr" style="position:absolute;left:-9999px">Kaun Phasa? Batch wedding ledger</h1>
-</header>
+<div class="toran" aria-hidden="true"></div>
+<div class="wrap">
+  <div class="mast">
+    <div class="brand">Chemisquad · IIT Roorkee</div>
+    <div style="display:flex;gap:8px;align-items:center">
+      <div class="season" id="season">Shaadi season 2026–27</div>
+      <div class="theme" role="group" aria-label="Theme"><button type="button" id="themeLight" class="opt light" aria-pressed="false"><span aria-hidden="true">&#9728;</span> Din</button><button type="button" id="themeDark" class="opt dark" aria-pressed="false"><span aria-hidden="true">&#9790;</span> Raat</button></div>
+    </div>
+  </div>
 
-<main class="wrap">
-  <p class="tagline">Batch ka official shaadi ledger. <strong>Kaun phas gaya, kaun phasne wala hai, aur baraat kab hai.</strong> Updates aate rahenge, laddoo bhi.</p>
+  <header class="hero" id="hero">
+    <div class="stage">
+      <canvas id="dots" aria-hidden="true"></canvas>
+      <div class="fallback">Kaun Phasa?</div>
+      <h1 style="position:absolute;left:-9999px">Kaun Phasa? The batch wedding ledger</h1>
+    </div>
+    <div class="intro">
+      <p>Batch ka official shaadi ledger. <strong>Kaun phas gaya, kaun phasne wala hai, aur baraat kab hai.</strong> WhatsApp scroll karna band karo.</p>
+      <div class="nextup" id="nextup"></div>
+      <div class="tally" id="tally"></div>
+    </div>
+  </header>
 
-  <div class="ownerbar" id="ownerbar" hidden>
-    <p>Tu admin hai. Kisi bhi card pe click karke date, shehar ya events update kar. Save karte hi sabko dikhega.</p>
+  <div class="adminbar" id="adminbar" hidden>
+    <span>Tu admin hai. Kisi bhi card ya naam pe click karke update kar. Save karte hi sabko dikhega.</span>
     <button class="btn primary" id="addBtn">+ Naya bakra</button>
   </div>
 
-  <div class="score" id="score"></div>
-
-  <section id="timelineSec">
+  <section id="invitesSec">
     <div class="sec-head">
-      <h2>Agla baraat</h2>
-      <p>Haldi se reception tak, sab ek jagah. Flights jaldi book karo.</p>
+      <div class="eyebrow">Nimantran</div>
+      <div class="row">
+        <h2>Aane wale <em>baraat</em></h2>
+        <p class="lede">Ek card, ek shaadi. Dates, shehar aur har function. Flights abhi book karo, baad mein rona mat.</p>
+      </div>
     </div>
-    <div class="timeline" id="timeline"></div>
+    <div class="invites" id="invites"></div>
   </section>
 
   <section>
     <div class="sec-head">
-      <h2>Batch ka register</h2>
-      <p>Status self-reported hai. Galat lage toh admin ko WhatsApp karo.</p>
+      <div class="eyebrow">Register</div>
+      <div class="row">
+        <h2>Batch ka <em>hisaab</em></h2>
+        <p class="lede">Status self-reported hai. Galat lage toh admin ko WhatsApp karo.</p>
+      </div>
     </div>
-    <div class="roster" id="roster"></div>
+    <div class="register" id="register"></div>
   </section>
 
-  <footer class="quirks">
-    <div class="line" id="quirk">Shaadi ka laddoo: jo khaye woh pachtaye, jo na khaye woh bhi pachtaye.</div>
+  <section>
+    <div class="sec-head">
+      <div class="eyebrow">Hall of fame</div>
+      <div class="row">
+        <h2>Pehle se <em>phase hue</em></h2>
+        <p class="lede">Jinhone raasta dikhaya. Saal ke hisaab se.</p>
+      </div>
+    </div>
+    <div class="fame-scroll"><div class="fame-stage" id="fameStage"><canvas id="fameDots" aria-hidden="true"></canvas><div class="fame-labels" id="fameLabels"></div></div></div>
+    <div class="fame-undated" id="fameUndated"></div>
+  </section>
+
+  <footer class="quirk">
+    <div class="rule"></div>
+    <div class="q" id="quirk">Shaadi ka laddoo: jo khaye woh pachtaye, jo na khaye woh bhi pachtaye.</div>
     <div class="meta" id="meta"></div>
   </footer>
-</main>
+</div>
 
 <div id="drawerBg" class="drawer-bg" hidden></div>
 <aside id="drawer" class="drawer" hidden aria-label="Edit member">
@@ -214,14 +278,15 @@ section { margin-top: 40px; }
       <div class="field"><label for="f_partner">Partner</label><input id="f_partner" maxlength="60" placeholder="optional"></div>
     </div>
     <div class="row2">
-      <div class="field"><label for="f_city">Shehar / venue</label><input id="f_city" maxlength="80" placeholder="e.g. Jaipur"></div>
+      <div class="field"><label for="f_city">Shehar</label><input id="f_city" maxlength="80" placeholder="e.g. Jaipur"></div>
       <div class="field"><label for="f_date">Shaadi ki date</label><input id="f_date" type="date"></div>
     </div>
-    <div class="field"><label for="f_notes">Notes</label><textarea id="f_notes" rows="2" maxlength="200" placeholder="dress code, hotel, kuch bhi"></textarea></div>
+    <div class="field"><label for="f_roast">Subtext (roast)</label><input id="f_roast" maxlength="90" placeholder="khaali chhodo toh auto milega"></div>
+    <div class="field"><label for="f_notes">Note</label><textarea id="f_notes" rows="2" maxlength="200" placeholder="dress code, hotel, kuch bhi"></textarea></div>
     <div class="field">
-      <label>Events</label>
+      <label>Functions</label>
       <div class="evrows" id="evrows"></div>
-      <div style="margin-top:8px"><button type="button" class="btn small" id="addEv">+ Event</button></div>
+      <div style="margin-top:8px"><button type="button" class="btn small" id="addEv">+ Function</button></div>
     </div>
     <div class="drawer-actions">
       <button type="button" class="btn danger" id="delBtn">Hatao</button>
@@ -237,41 +302,41 @@ section { margin-top: 40px; }
 <!-- DATA: the ledger. Edits by the owner regenerate this block and republish the page. -->
 <script type="application/json" id="ledger">
 {"updated":"2026-10-06","members":[
-{"slug": "lakshya-kumawat", "name": "Lakshya Kumawat", "status": "married", "partner": "", "city": "", "weddingDate": "2024-04-21", "notes": "Admin. Khud phasa, ab register sambhal raha hai.", "events": [{"type": "Functions", "date": "2024-04-20", "venue": "", "dress": ""}, {"type": "Baraat / Pheras", "date": "2024-04-21", "venue": "", "dress": ""}]},
-{"slug": "ankit-kharpuse", "name": "Ankit Kharpuse", "status": "married", "partner": "", "city": "", "weddingDate": "", "notes": "", "events": []},
-{"slug": "milan", "name": "Milan", "status": "married", "partner": "", "city": "", "weddingDate": "2026-02-08", "notes": "", "events": [{"type": "Functions", "date": "2026-02-07", "venue": "", "dress": ""}, {"type": "Baraat / Pheras", "date": "2026-02-08", "venue": "", "dress": ""}]},
-{"slug": "pawan-nagar", "name": "Pawan Nagar", "status": "married", "partner": "", "city": "", "weddingDate": "", "notes": "", "events": []},
-{"slug": "sagar-solanki", "name": "Sagar Solanki", "status": "married", "partner": "", "city": "", "weddingDate": "2020-12-11", "notes": "", "events": [{"type": "Functions", "date": "2020-12-10", "venue": "", "dress": ""}, {"type": "Baraat / Pheras", "date": "2020-12-11", "venue": "", "dress": ""}]},
-{"slug": "kunal-satpal", "name": "Kunal Satpal", "status": "married", "partner": "", "city": "", "weddingDate": "", "notes": "", "events": []},
-{"slug": "vishal-choudhary", "name": "Vishal Choudhary", "status": "engaged", "partner": "", "city": "Delhi / Jaipur", "weddingDate": "2027-02-09", "notes": "", "events": [{"type": "Functions", "date": "2027-02-07", "venue": "Delhi", "dress": ""}, {"type": "Functions", "date": "2027-02-08", "venue": "Delhi / Jaipur", "dress": ""}, {"type": "Baraat / Pheras", "date": "2027-02-09", "venue": "Jaipur", "dress": ""}]},
-{"slug": "shubhangit-katiyar", "name": "Shubhangit Katiyar", "status": "engaged", "partner": "", "city": "Kanpur", "weddingDate": "2026-12-07", "notes": "", "events": [{"type": "Functions", "date": "2026-12-06", "venue": "Kanpur", "dress": ""}, {"type": "Baraat / Pheras", "date": "2026-12-07", "venue": "Kanpur", "dress": ""}]},
-{"slug": "sahat-prasad", "name": "Sahat Prasad", "status": "engaged", "partner": "", "city": "Nagpur", "weddingDate": "2027-01-25", "notes": "", "events": [{"type": "Functions", "date": "2027-01-24", "venue": "Nagpur", "dress": ""}, {"type": "Baraat / Pheras", "date": "2027-01-25", "venue": "Nagpur", "dress": ""}]},
-{"slug": "ashish-roorkee", "name": "Ashish", "status": "engaged", "partner": "", "city": "Bodh Gaya", "weddingDate": "2027-03-01", "notes": "", "events": [{"type": "Functions", "date": "2027-02-28", "venue": "Bodh Gaya", "dress": ""}, {"type": "Baraat / Pheras", "date": "2027-03-01", "venue": "Bodh Gaya", "dress": ""}]},
-{"slug": "shivam-sachan", "name": "Shivam Sachan", "status": "engaged", "partner": "", "city": "Kanpur", "weddingDate": "2026-11-24", "notes": "", "events": [{"type": "Baraat / Pheras", "date": "2026-11-24", "venue": "Kanpur", "dress": ""}]},
-{"slug": "darshan-s-narayan", "name": "Darshan S. Narayan", "status": "single", "partner": "", "city": "", "weddingDate": "", "notes": "", "events": []},
-{"slug": "akshit", "name": "Akshit", "status": "single", "partner": "", "city": "", "weddingDate": "", "notes": "", "events": []},
-{"slug": "bhanu", "name": "Bhanu", "status": "single", "partner": "", "city": "", "weddingDate": "", "notes": "", "events": []},
-{"slug": "chirag-garg", "name": "Chirag Garg", "status": "single", "partner": "", "city": "", "weddingDate": "", "notes": "", "events": []},
-{"slug": "dk", "name": "DK", "status": "single", "partner": "", "city": "", "weddingDate": "", "notes": "", "events": []},
-{"slug": "harsh-dohare", "name": "Harsh Dohare", "status": "single", "partner": "", "city": "", "weddingDate": "", "notes": "", "events": []},
-{"slug": "kapil", "name": "Kapil", "status": "single", "partner": "", "city": "", "weddingDate": "", "notes": "", "events": []},
-{"slug": "naman-sinha", "name": "Naman Sinha", "status": "single", "partner": "", "city": "", "weddingDate": "", "notes": "", "events": []},
-{"slug": "nirajsinh-rajput", "name": "Nirajsinh Rajput", "status": "single", "partner": "", "city": "", "weddingDate": "", "notes": "", "events": []},
-{"slug": "rishav-mansuri", "name": "Rishav Mansuri", "status": "single", "partner": "", "city": "", "weddingDate": "", "notes": "", "events": []},
-{"slug": "satvik-tedla", "name": "Satvik Tedla", "status": "single", "partner": "", "city": "", "weddingDate": "", "notes": "", "events": []},
-{"slug": "suyash-singh", "name": "Suyash Singh", "status": "single", "partner": "", "city": "", "weddingDate": "", "notes": "", "events": []},
-{"slug": "tanpreet", "name": "Tanpreet", "status": "single", "partner": "", "city": "", "weddingDate": "", "notes": "", "events": []},
-{"slug": "vivek-kumar", "name": "Vivek Kumar", "status": "single", "partner": "", "city": "", "weddingDate": "", "notes": "", "events": []},
-{"slug": "yogesh-nikose", "name": "Yogesh Nikose", "status": "single", "partner": "", "city": "", "weddingDate": "", "notes": "", "events": []}
+{"slug": "lakshya-kumawat", "name": "Lakshya Kumawat", "status": "married", "partner": "", "city": "", "weddingDate": "2024-04-21", "notes": "Admin. Khud phasa, ab register sambhal raha hai.", "events": [{"type": "Functions", "date": "2024-04-20", "venue": "", "dress": ""}, {"type": "Baraat / Pheras", "date": "2024-04-21", "venue": "", "dress": ""}], "roast": "Late night calls ab seen-zone mein."},
+{"slug": "ankit-kharpuse", "name": "Ankit Kharpuse", "status": "married", "partner": "", "city": "", "weddingDate": "2025-11-25", "notes": "", "events": [{"type": "Functions", "date": "2025-11-24", "venue": "", "dress": ""}, {"type": "Baraat / Pheras", "date": "2025-11-25", "venue": "", "dress": ""}], "roast": "Weekend plans: approval pending."},
+{"slug": "milan", "name": "Milan", "status": "married", "partner": "", "city": "", "weddingDate": "2026-02-04", "notes": "", "events": [{"type": "Functions", "date": "2026-02-02", "venue": "", "dress": ""}, {"type": "Functions", "date": "2026-02-03", "venue": "", "dress": ""}, {"type": "Baraat / Pheras", "date": "2026-02-04", "venue": "", "dress": ""}], "roast": "Netflix password ab shared hai."},
+{"slug": "pawan-nagar", "name": "Pawan Nagar", "status": "married", "partner": "", "city": "", "weddingDate": "2026-02-10", "notes": "", "events": [{"type": "Functions", "date": "2026-02-08", "venue": "", "dress": ""}, {"type": "Functions", "date": "2026-02-09", "venue": "", "dress": ""}, {"type": "Baraat / Pheras", "date": "2026-02-10", "venue": "", "dress": ""}], "roast": "Gym ka naya naam: grocery run."},
+{"slug": "sagar-solanki", "name": "Sagar Solanki", "status": "married", "partner": "", "city": "", "weddingDate": "2020-12-11", "notes": "", "events": [{"type": "Functions", "date": "2020-12-10", "venue": "", "dress": ""}, {"type": "Baraat / Pheras", "date": "2020-12-11", "venue": "", "dress": ""}], "roast": "Group trip? \"Poochh ke batata hoon.\""},
+{"slug": "kunal-satpal", "name": "Kunal Satpal", "status": "married", "partner": "", "city": "", "weddingDate": "2026-06-19", "notes": "", "events": [{"type": "Baraat / Pheras", "date": "2026-06-19", "venue": "", "dress": ""}], "roast": "Sabzi ke daam ab pata hain."},
+{"slug": "vishal-choudhary", "name": "Vishal Choudhary", "status": "engaged", "partner": "", "city": "Delhi / Jaipur", "weddingDate": "2027-02-09", "notes": "", "events": [{"type": "Functions", "date": "2027-02-07", "venue": "Delhi", "dress": ""}, {"type": "Functions", "date": "2027-02-08", "venue": "Delhi / Jaipur", "dress": ""}, {"type": "Baraat / Pheras", "date": "2027-02-09", "venue": "Jaipur", "dress": ""}], "roast": "Card chhap gaya, WhatsApp pe bhejna baaki."},
+{"slug": "shubhangit-katiyar", "name": "Shubhangit Katiyar", "status": "engaged", "partner": "", "city": "Kanpur", "weddingDate": "2026-12-07", "notes": "", "events": [{"type": "Functions", "date": "2026-12-06", "venue": "Kanpur", "dress": ""}, {"type": "Baraat / Pheras", "date": "2026-12-07", "venue": "Kanpur", "dress": ""}], "roast": "Sangeet ke steps abhi bhi yaad nahi."},
+{"slug": "sahat-prasad", "name": "Sahat Prasad", "status": "engaged", "partner": "", "city": "Nagpur", "weddingDate": "2027-01-25", "notes": "", "events": [{"type": "Functions", "date": "2027-01-24", "venue": "Nagpur", "dress": ""}, {"type": "Baraat / Pheras", "date": "2027-01-25", "venue": "Nagpur", "dress": ""}], "roast": "Pandit ji ka muhurat final, hamari chhutti nahi."},
+{"slug": "ashish-roorkee", "name": "Ashish", "status": "engaged", "partner": "", "city": "Bodh Gaya", "weddingDate": "2027-03-01", "notes": "", "events": [{"type": "Functions", "date": "2027-02-28", "venue": "Bodh Gaya", "dress": ""}, {"type": "Baraat / Pheras", "date": "2027-03-01", "venue": "Bodh Gaya", "dress": ""}], "roast": "Lehenga budget > laptop budget."},
+{"slug": "shivam-sachan", "name": "Shivam Sachan", "status": "engaged", "partner": "", "city": "Kanpur", "weddingDate": "2026-11-24", "notes": "", "events": [{"type": "Baraat / Pheras", "date": "2026-11-24", "venue": "Kanpur", "dress": ""}], "roast": "Sherwani fitting round 3."},
+{"slug": "darshan-s-narayan", "name": "Darshan S. Narayan", "status": "single", "partner": "", "city": "", "weddingDate": "", "notes": "", "events": [], "roast": "Shaadi.com ka ad skip karta hai."},
+{"slug": "akshit", "name": "Akshit", "status": "single", "partner": "", "city": "", "weddingDate": "", "notes": "", "events": [], "roast": "Rishta aunty radar: LOW."},
+{"slug": "bhanu", "name": "Bhanu", "status": "single", "partner": "", "city": "", "weddingDate": "", "notes": "", "events": [], "roast": "Mummy ne biodata ready rakha hai."},
+{"slug": "chirag-garg", "name": "Chirag Garg", "status": "single", "partner": "", "city": "", "weddingDate": "", "notes": "", "events": [], "roast": "Bachelor party committee, lifetime member."},
+{"slug": "dk", "name": "DK", "status": "single", "partner": "", "city": "", "weddingDate": "", "notes": "", "events": [], "roast": "Ghar waale \"beta kab\" mode mein."},
+{"slug": "harsh-dohare", "name": "Harsh Dohare", "status": "single", "partner": "", "city": "", "weddingDate": "", "notes": "", "events": [], "roast": "Baraat mein nachne ke liye hamesha available."},
+{"slug": "kapil", "name": "Kapil", "status": "single", "partner": "", "city": "", "weddingDate": "", "notes": "", "events": [], "roast": "Har shaadi mein \"next you\" sunta hai."},
+{"slug": "naman-sinha", "name": "Naman Sinha", "status": "single", "partner": "", "city": "", "weddingDate": "", "notes": "", "events": [], "roast": "Stag entry specialist."},
+{"slug": "nirajsinh-rajput", "name": "Nirajsinh Rajput", "status": "single", "partner": "", "city": "", "weddingDate": "", "notes": "", "events": [], "roast": "Shaadi ke khaane ka official critic."},
+{"slug": "rishav-mansuri", "name": "Rishav Mansuri", "status": "single", "partner": "", "city": "", "weddingDate": "", "notes": "", "events": [], "roast": "Weekend plans: khud ke, bina approval."},
+{"slug": "satvik-tedla", "name": "Satvik Tedla", "status": "single", "partner": "", "city": "", "weddingDate": "", "notes": "", "events": [], "roast": "Rishtedaaron se Diwali pe chhup jaata hai."},
+{"slug": "suyash-singh", "name": "Suyash Singh", "status": "single", "partner": "", "city": "", "weddingDate": "", "notes": "", "events": [], "roast": "Joota churane wali team ka double agent."},
+{"slug": "tanpreet", "name": "Tanpreet", "status": "single", "partner": "", "city": "", "weddingDate": "", "notes": "", "events": [], "roast": "Passport ready, plus-one nahi."},
+{"slug": "vivek-kumar", "name": "Vivek Kumar", "status": "single", "partner": "", "city": "", "weddingDate": "", "notes": "", "events": [], "roast": "Dulhe ke dost ka role har baar nibhata hai."},
+{"slug": "yogesh-nikose", "name": "Yogesh Nikose", "status": "single", "partner": "", "city": "", "weddingDate": "", "notes": "", "events": [], "roast": "\"Abhi career pe focus hai.\" Saal 6."},
+{"slug": "rishabh", "name": "Rishabh", "status": "engaged", "partner": "", "city": "", "weddingDate": "", "notes": "Date abhi batani hai.", "events": [], "roast": "Guest list mein hum hain na?"},
+{"slug": "anant", "name": "Anant", "status": "engaged", "partner": "", "city": "", "weddingDate": "", "notes": "Date abhi batani hai.", "events": [], "roast": "Haldi ki taiyari, gym membership bhi."}
 ]}
 </script>
 
 <script>
 (() => {
-  // Capture the pristine document before any script touches the DOM: the template we republish from.
-  const TEMPLATE = document.documentElement.outerHTML;
+  const TEMPLATE = document.documentElement.outerHTML.replace(/<html([^>]*?)\sdata-theme="[^"]*"/, '<html$1');
   const LEDGER_RE = /(<script type="application\/json" id="ledger">)([\s\S]*?)(<\/script>)/;
-
   const $ = (s, r = document) => r.querySelector(s);
   const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
   const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -280,167 +345,170 @@ section { margin-top: 40px; }
   let canWrite = false, artifact = null;
 
   const STATUS = {
-    married: { title: 'Phas gaye', emoji: '🪢', roasts: [
-      'Permanent plus-one unlocked.', 'Weekend plans: approval pending.', 'Sabzi ke daam ab pata hain.',
-      'Late night calls ab seen-zone mein.', 'Netflix password ab shared hai.', 'Gym ka naya naam: grocery run.'] },
-    engaged: { title: 'Trap scheduled', emoji: '💍', roasts: [
-      'Countdown chal raha hai.', 'Haldi ki taiyari, gym membership bhi.', 'Date bhejo, flights mehengi ho rahi hain.',
-      'Lehenga budget > laptop budget.', 'Guest list mein hum hain na?'] },
-    single: { title: 'At large', emoji: '🏃', roasts: [
-      'Rishta aunty radar: LOW.', 'Abhi bhi parole pe.', 'Mummy ne biodata ready rakha hai.',
-      'Bachelor party committee, lifetime member.', 'Ghar waale "beta kab" mode mein.', 'Shaadi.com ka ad skip karta hai.',
-      'Baraat mein nachne ke liye hamesha available.'] }
+    married: { title: 'Phas gaye', tag: 'Permanent plus-one unlocked', roasts: [
+      'Weekend plans: approval pending.', 'Sabzi ke daam ab pata hain.', 'Late night calls ab seen-zone mein.',
+      'Netflix password ab shared hai.', 'Gym ka naya naam: grocery run.', 'Group trip? "Poochh ke batata hoon."',
+      'Anniversary date yaad hai. Hopefully.', 'Trip plan karte hi "ghar pe baat karni padegi".'] },
+    engaged: { title: 'Trap scheduled', tag: 'Countdown chal raha hai', roasts: [
+      'Haldi ki taiyari, gym membership bhi.', 'Lehenga budget > laptop budget.', 'Guest list mein hum hain na?',
+      'Pandit ji ka muhurat final, hamari chhutti nahi.', 'Sherwani fitting round 3.', 'Sangeet ke steps abhi bhi yaad nahi.',
+      'Card chhap gaya, WhatsApp pe bhejna baaki.'] },
+    single: { title: 'At large', tag: 'Abhi bhi parole pe', roasts: [
+      'Rishta aunty radar: LOW.', 'Mummy ne biodata ready rakha hai.', 'Bachelor party committee, lifetime member.',
+      'Ghar waale "beta kab" mode mein.', 'Shaadi.com ka ad skip karta hai.', 'Baraat mein nachne ke liye hamesha available.',
+      'Har shaadi mein "next you" sunta hai.', 'Stag entry specialist.', 'Shaadi ke khaane ka official critic.',
+      'Weekend plans: khud ke, bina approval.', 'Rishtedaaron se Diwali pe chhup jaata hai.', 'Joota churane wali team ka double agent.',
+      'Passport ready, plus-one nahi.', 'Dulhe ke dost ka role har baar nibhata hai.', '"Abhi career pe focus hai." Saal 6.',
+      'Hostel wali raatein abhi bhi legal hain.', 'Baraat ka DJ request line: yehi hai.'] }
   };
   const QUIRKS = [
     'Shaadi ka laddoo: jo khaye woh pachtaye, jo na khaye woh bhi pachtaye.',
-    '"Beta, ab settle ho jao." — har rishtedaar, har function pe.',
-    'Dulhe ka dost bano, baraat mein sabse aage nacho, khaane mein sabse pehle pahuncho.',
+    'Beta, ab settle ho jao. Har rishtedaar, har function pe.',
+    'Dulhe ka dost bano. Baraat mein sabse aage nacho, khaane mein sabse pehle pahuncho.',
     'Sangeet practice group ban gaya hai. Attendance mandatory.',
     'Kab de rahe ho party? Shaadi se pehle ya baad mein, dono chalega.',
-    'Rule #1 of baraat: joota churane wali team se dosti rakho.',
-    'Jo abhi single hai, woh agle saal ke ledger mein dusri column mein hoga.',
-    'Haldi mein peele kapde pehno. Yellow Chemical batch ka official colour hai ab.'
+    'Rule number one of baraat: joota churane wali team se dosti rakho.',
+    'Jo abhi single hai, woh agle saal ke register mein doosri column mein hoga.',
+    'Haldi mein peele kapde pehno. Yellow ab Chemisquad ka official colour hai.'
   ];
   const EV_TYPES = ['Roka', 'Engagement', 'Haldi', 'Mehendi', 'Sangeet', 'Functions', 'Baraat / Pheras', 'Reception', 'Other'];
+  const MONTHS = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  const MONTHS_LONG = ['January','February','March','April','May','June','July','August','September','October','November','December'];
 
   const today = () => { const d = new Date(); return new Date(d.getFullYear(), d.getMonth(), d.getDate()); };
   const parseD = s => { if (!s) return null; const [y, m, d] = s.split('-').map(Number); return (y && m && d) ? new Date(y, m - 1, d) : null; };
   const daysTo = d => Math.round((d - today()) / 86400000);
-  const MONTHS = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
   const hash = s => { let h = 0; for (const c of s) h = (h * 31 + c.charCodeAt(0)) >>> 0; return h; };
   const initials = n => n.split(/\s+/).filter(Boolean).slice(0, 2).map(w => w[0].toUpperCase()).join('');
   const slugify = n => n.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '') || ('m-' + Date.now());
+  const first = n => n.split(/\s+/)[0];
 
-  function chipFor(d) {
-    if (!d) return '<span class="chip tba">date TBA</span>';
+  // A roast is chosen once (first unused line in that column's pool) and then saved with the member.
+  function pickRoast(status, members) {
+    const pool = (STATUS[status] || STATUS.single).roasts;
+    const used = new Set(members.filter(x => x.status === status).map(x => x.roast).filter(Boolean));
+    return pool.find(r => !used.has(r)) || pool[members.length % pool.length];
+  }
+  function stamp(d) {
+    if (!d) return '<span class="stamp tba">Date TBA</span>';
     const n = daysTo(d);
-    if (n < 0) return `<span class="chip done">ho gaya</span>`;
-    if (n === 0) return `<span class="chip soon">aaj!</span>`;
-    if (n <= 45) return `<span class="chip soon">${n} din baaki</span>`;
-    return `<span class="chip far">${n} din</span>`;
+    if (n < 0) return '<span class="stamp done">Ho gaya</span>';
+    if (n === 0) return '<span class="stamp soon">Aaj!</span>';
+    if (n <= 45) return `<span class="stamp soon">${n} din baaki</span>`;
+    return `<span class="stamp far">${n} din</span>`;
   }
-
-  function allEvents() {
-    const out = [];
-    for (const m of state.members) {
-      if (m.status === 'single') continue;
-      const evs = (m.events && m.events.length) ? m.events : (m.status === 'engaged' ? [{ type: 'Baraat / Pheras', date: m.weddingDate || '', venue: m.city || '' }] : []);
-      for (const e of evs) out.push({ ...e, who: m.name, slug: m.slug, d: parseD(e.date), venue: e.venue || m.city || '' });
-    }
-    return out;
+  // The wedding's anchor date: explicit weddingDate, else the last dated event.
+  function anchor(m) {
+    const d = parseD(m.weddingDate); if (d) return d;
+    const ds = (m.events || []).map(e => parseD(e.date)).filter(Boolean).sort((a, b) => a - b);
+    return ds[ds.length - 1] || null;
   }
+  function sortedEvents(m) { return (m.events || []).slice().sort((a, b) => (parseD(a.date) || 0) - (parseD(b.date) || 0)); }
 
   function render() {
     const counts = { married: 0, engaged: 0, single: 0 };
     for (const m of state.members) counts[m.status] = (counts[m.status] || 0) + 1;
 
-    const upcoming = allEvents().filter(e => e.d && daysTo(e.d) >= 0).sort((a, b) => a.d - b.d);
-    const next = upcoming[0];
-    const nextText = next
-      ? `${next.who} · ${next.type} · ${daysTo(next.d) === 0 ? 'aaj' : daysTo(next.d) + ' din mein'}`
-      : 'Koi date nahi aayi abhi. Engaged log, jaldi batao.';
-    $('#score').innerHTML = `
-      <div class="tile married"><div class="num">${counts.married}</div><div class="lbl">Phas gaye</div></div>
-      <div class="tile engaged"><div class="num">${counts.engaged}</div><div class="lbl">Trap scheduled</div></div>
-      <div class="tile single"><div class="num">${counts.single}</div><div class="lbl">Abhi bhi at large</div></div>
-      <div class="tile next"><div class="eyebrow">Agla baraat</div><div class="num">${esc(nextText)}</div></div>`;
+    // Upcoming weddings: engaged members, plus anyone whose anchor date is in the future.
+    const upcoming = state.members
+      .filter(m => m.status === 'engaged' || (anchor(m) && daysTo(anchor(m)) >= 0 && m.status !== 'single'))
+      .map(m => ({ m, d: anchor(m) }))
+      .sort((a, b) => (a.d ? a.d : Infinity) - (b.d ? b.d : Infinity));
+    const live = upcoming.filter(x => x.d && daysTo(x.d) >= 0);
+    const next = live[0];
 
-    // Timeline
-    const evs = allEvents();
-    const dated = evs.filter(e => e.d).sort((a, b) => a.d - b.d);
-    const future = dated.filter(e => daysTo(e.d) >= 0), past = dated.filter(e => daysTo(e.d) < 0);
-    const tba = evs.filter(e => !e.d);
-    const evRow = e => `
-      <div class="ev ${e.d ? '' : 'tba'}">
-        <div class="date">${e.d ? `<div class="d">${e.d.getDate()}</div><div class="m">${MONTHS[e.d.getMonth()]} ${String(e.d.getFullYear()).slice(2)}</div>` : `<div class="d">?</div><div class="m">TBA</div>`}</div>
-        <div class="what"><div class="t">${esc(e.who)} <span>· ${esc(e.type || 'Function')}</span></div>
-          <div class="w">${esc(e.venue || 'Venue batana baaki hai')}${e.dress ? ' · dress: ' + esc(e.dress) : ''}</div></div>
-        ${chipFor(e.d)}
-      </div>`;
-    let tl = '';
-    if (!future.length && !tba.length && !past.length) tl = '<div class="empty">Abhi koi event nahi. Jaise hi koi date aaye, yahan dikhegi.</div>';
-    tl += future.map(evRow).join('');
-    if (tba.length) tl += `<div class="eyebrow" style="margin-top:10px">Date abhi aani hai</div>` + tba.map(evRow).join('');
-    if (past.length) tl += `<div class="eyebrow" style="margin-top:10px">Ho chuka</div>` + past.slice(-6).reverse().map(evRow).join('');
-    $('#timeline').innerHTML = tl;
+    // Hero
+    $('#nextup').innerHTML = next
+      ? `<div class="eyebrow">Agla baraat</div>
+         <div class="big">${esc(next.m.name)} <i>· ${daysTo(next.d) === 0 ? 'aaj' : daysTo(next.d) + ' din'}</i></div>
+         <div class="sub">${next.d.getDate()} ${MONTHS_LONG[next.d.getMonth()]} ${next.d.getFullYear()}${next.m.city ? ' · ' + esc(next.m.city) : ''}</div>`
+      : `<div class="eyebrow">Agla baraat</div><div class="big">Koi date nahi <i>abhi</i></div><div class="sub">Engaged log, jaldi batao.</div>`;
+    $('#tally').innerHTML = `
+      <div class="married"><span class="num">${counts.married}</span><small>Phas gaye</small></div>
+      <div class="engaged"><span class="num">${counts.engaged}</span><small>Trap scheduled</small></div>
+      <div class="single"><span class="num">${counts.single}</span><small>At large</small></div>`;
+    const yrs = live.map(x => x.d.getFullYear());
+    if (yrs.length) { const a = Math.min(...yrs), b = Math.max(...yrs); $('#season').textContent = `Shaadi season ${a}${b !== a ? '–' + String(b).slice(2) : ''}`; }
 
-    // Roster
-    const card = m => {
-      const st = STATUS[m.status] || STATUS.single;
-      const roast = st.roasts[hash(m.slug) % st.roasts.length];
-      const d = parseD(m.weddingDate);
-      let line = roast;
-      if (m.status === 'married') line = (m.partner ? `<b>with ${esc(m.partner)}</b> · ` : '') + (d ? `since ${d.getDate()} ${MONTHS[d.getMonth()]} ${d.getFullYear()} · ` : '') + roast;
-      if (m.status === 'engaged') line = (d ? `<b>${daysTo(d) >= 0 ? daysTo(d) + ' din baaki' : 'ho gaya'}</b>${m.city ? ' · ' + esc(m.city) : ''} · ` : (m.city ? esc(m.city) + ' · ' : '')) + roast;
+    // Invitation cards
+    const inviteCard = ({ m, d }) => {
+      const evs = sortedEvents(m);
+      const tag = canWrite ? 'button' : 'article';
+      return `<${tag} class="invite ${d ? '' : 'tba'} ${canWrite ? 'editable' : ''}" data-slug="${esc(m.slug)}" ${canWrite ? 'type="button" style="text-align:left;font:inherit"' : ''}>
+        <div class="top"><div class="city">${esc(m.city || 'Shehar TBA')}</div>${stamp(d)}</div>
+        <div class="name">${esc(m.name)}</div>
+        ${d ? `<div class="when"><span class="num">${d.getDate()}</span><span class="mon">${MONTHS_LONG[d.getMonth()]}</span><span class="yr">${d.getFullYear()}</span></div>`
+            : `<div class="when"><span class="num">??</span><span class="mon">date aani hai</span></div>`}
+        ${evs.length ? `<div class="events">${evs.map(e => { const ed = parseD(e.date); return `<div><b>${ed ? ed.getDate() + ' ' + MONTHS[ed.getMonth()] : 'TBA'}</b><span>${esc(e.type || 'Function')}${e.venue && e.venue !== m.city ? ' · ' + esc(e.venue) : ''}${e.dress ? ' · ' + esc(e.dress) : ''}</span></div>`; }).join('')}</div>` : ''}
+        ${m.notes ? `<div class="note">${esc(m.notes)}</div>` : ''}
+      </${tag}>`;
+    };
+    $('#invites').innerHTML = upcoming.length ? upcoming.map(inviteCard).join('') : '<div class="empty">Abhi koi baraat line mein nahi. Shaanti ka samay hai.</div>';
+
+    // Register
+    const person = (m, idx) => {
+      const roast = m.roast || pickRoast(m.status, state.members);
+      const d = anchor(m);
+      let meta = `<i>${roast}</i>`;
+      if (m.status === 'married') meta = `${m.partner ? 'with ' + esc(m.partner) + ' · ' : ''}${d ? 'since ' + MONTHS[d.getMonth()] + ' ' + d.getFullYear() + ' · ' : ''}<i>${roast}</i>`;
+      if (m.status === 'engaged') meta = `${d ? (daysTo(d) >= 0 ? daysTo(d) + ' din baaki' : 'ho gaya') : 'date TBA'}${m.city ? ' · ' + esc(m.city) : ''} · <i>${roast}</i>`;
       const tag = canWrite ? 'button' : 'div';
-      return `<${tag} class="card ${canWrite ? 'editable' : ''}" data-slug="${esc(m.slug)}" ${canWrite ? 'type="button"' : ''}>
-        <div class="av" aria-hidden="true">${esc(initials(m.name))}</div>
-        <div><div class="n">${esc(m.name)}</div><div class="q">${line}</div></div></${tag}>`;
+      return `<${tag} class="person ${canWrite ? 'editable' : ''}" data-slug="${esc(m.slug)}" ${canWrite ? 'type="button"' : ''}>
+        <div class="mono" aria-hidden="true">${esc(initials(m.name))}</div>
+        <div><div class="n">${esc(m.name)}</div><div class="m">${meta}</div></div></${tag}>`;
     };
     const col = key => {
       const list = state.members.filter(m => m.status === key).sort((a, b) => a.name.localeCompare(b.name));
-      return `<div class="col ${key}"><div class="col-head"><h3>${STATUS[key].title} ${STATUS[key].emoji}</h3><span class="count">${list.length}</span></div>
-        <div class="cards">${list.length ? list.map(card).join('') : '<div class="col-empty">Khaali. Abhi.</div>'}</div></div>`;
+      return `<div class="col ${key}"><div class="col-head"><span class="num">${list.length}</span><h3>${STATUS[key].title}</h3><p>${STATUS[key].tag}</p></div>
+        <div class="people">${list.length ? list.map(person).join('') : '<div class="col-empty">Khaali. Abhi.</div>'}</div></div>`;
     };
-    $('#roster').innerHTML = col('married') + col('engaged') + col('single');
+    $('#register').innerHTML = col('married') + col('engaged') + col('single');
+
+    // Hall of fame: married members on a dot-built timeline
+    const married = state.members.filter(m => m.status === 'married');
+    const dated = married.map(m => ({ m, d: anchor(m) })).filter(x => x.d).sort((a, b) => a.d - b.d);
+    const undated = married.filter(m => !anchor(m));
+    $('#fameUndated').innerHTML = undated.length ? `Bina date ke: ${undated.map(m => `<b>${esc(m.name)}</b>`).join(', ')}. Date bhejo, timeline pe chadhao.` : '';
+    fame.setNodes(dated.map(({ m, d }) => ({ name: m.name, date: `${d.getDate()} ${MONTHS[d.getMonth()]} ${d.getFullYear()}`, year: d.getFullYear() })));
 
     $('#meta').textContent = `Last updated ${state.updated || '—'} · ${state.members.length} log register mein`;
-    if (canWrite) $('#roster').querySelectorAll('.card').forEach(b => b.addEventListener('click', () => openDrawer(b.dataset.slug)));
+    if (canWrite) document.querySelectorAll('.person, .invite.editable').forEach(b => b.addEventListener('click', () => openDrawer(b.dataset.slug)));
 
-    // Fewer scheduled events → more dots fall and go inactive.
-    dots.setWeight(future.length + tba.length);
+    dots.setWeight(live.length);
   }
 
-  // ---------- Quirk rotator ----------
+  // Quirk rotator
   let qi = Math.floor(Math.random() * QUIRKS.length);
   setInterval(() => {
     const el = $('#quirk'); qi = (qi + 1) % QUIRKS.length;
-    el.style.opacity = 0; setTimeout(() => { el.textContent = QUIRKS[qi]; el.style.opacity = 1; }, reduced ? 0 : 400);
-  }, 7000);
+    el.style.opacity = 0; setTimeout(() => { el.textContent = QUIRKS[qi]; el.style.opacity = 1; }, reduced ? 0 : 500);
+  }, 8000);
 
-  // ---------- Particle hero ----------
-  const dots = (() => {
-    const hero = $('#hero'), cv = $('#dots'), ctx = cv.getContext('2d');
-    if (!ctx) { hero.classList.add('no-canvas'); return { setWeight() {} }; }
-    let W = 0, H = 0, dpr = 1, parts = [], targets = [], weight = 0, raf = 0, floor = 0;
+  // Shared particle engine: dots fly in and settle on target points; the spares fall and pile up as rubble.
+  function makeField(stage, cv, sampler) {
+    const ctx = cv.getContext('2d');
+    if (!ctx) return { build() {}, recolor() {}, clear() {}, ok: false };
+    let W = 0, H = 0, dpr = 1, parts = [], raf = 0;
     const css = v => getComputedStyle(document.documentElement).getPropertyValue(v).trim();
-    let colAccent = css('--accent'), colRubble = css('--rubble');
-
-    function sample() {
-      const off = document.createElement('canvas'); off.width = W; off.height = H;
-      const o = off.getContext('2d');
-      let size = Math.min(W * 0.17, 150);
-      o.font = `${size}px "Yatra One", "Baloo 2", sans-serif`;
-      while (o.measureText('Kaun Phasa?').width > W * 0.92 && size > 24) { size -= 4; o.font = `${size}px "Yatra One", "Baloo 2", sans-serif`; }
-      o.fillStyle = '#fff'; o.textAlign = 'center'; o.textBaseline = 'middle';
-      o.fillText('Kaun Phasa?', W / 2, H * 0.44);
-      const img = o.getImageData(0, 0, W, H).data, step = W < 520 ? 4 : 5, t = [];
-      for (let y = 0; y < H; y += step) for (let x = 0; x < W; x += step) if (img[(y * W + x) * 4 + 3] > 128) t.push({ x, y });
-      return t;
-    }
-    function extraCount() { return Math.max(120, Math.min(900, 700 - weight * 60)); }
+    let colA = css('--gold'), colB = css('--gold-2'), colR = css('--rubble');
     function build() {
-      const r = hero.getBoundingClientRect(); dpr = Math.min(2, devicePixelRatio || 1);
-      W = Math.max(320, Math.floor(r.width)); H = Math.floor(r.height); floor = H - 2;
+      const r = stage.getBoundingClientRect(); dpr = Math.min(2, devicePixelRatio || 1);
+      W = Math.max(240, Math.floor(r.width)); H = Math.floor(r.height);
+      if (!H) return;
       cv.width = W * dpr; cv.height = H * dpr; ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-      colAccent = css('--accent'); colRubble = css('--rubble');
-      targets = sample();
-      const n = targets.length + extraCount();
+      const { targets, extra, r: tr } = sampler(W, H);
       parts = [];
-      for (let i = 0; i < n; i++) {
+      for (let i = 0; i < targets.length + extra; i++) {
         const tg = i < targets.length ? targets[i] : null;
-        const p = {
-          x: Math.random() * W, y: -20 - Math.random() * H * 1.5,
-          vx: (Math.random() - .5) * 2, vy: Math.random() * 2,
-          tx: tg ? tg.x : null, ty: tg ? tg.y : null,
-          r: tg ? 1.6 + Math.random() * 0.8 : 1.8 + Math.random() * 1.6,
-          land: floor - Math.random() * 10 - (i % 7), dead: false, delay: Math.random() * 40
-        };
+        const p = { x: Math.random() * W, y: -10 - Math.random() * H * 1.4, vx: (Math.random() - .5) * 1.5, vy: Math.random() * 2,
+          tx: tg ? tg.x : null, ty: tg ? tg.y : null, r: tg ? tr + Math.random() * 0.6 : 1.6 + Math.random() * 1.4,
+          land: H - 2 - Math.random() * 9 - (i % 5), dead: false, delay: Math.random() * 50, tone: Math.random() < 0.35 };
         if (reduced) { if (tg) { p.x = tg.x; p.y = tg.y; } else { p.dead = true; p.y = p.land; } }
         parts.push(p);
       }
+      cancelAnimationFrame(raf);
       if (reduced) { draw(); return; }
-      cancelAnimationFrame(raf); raf = requestAnimationFrame(tick);
+      raf = requestAnimationFrame(tick);
     }
     function tick() {
       let alive = false;
@@ -448,13 +516,13 @@ section { margin-top: 40px; }
         if (p.dead) continue;
         if (p.delay > 0) { p.delay--; alive = true; continue; }
         if (p.tx !== null) {
-          p.vx += (p.tx - p.x) * 0.02; p.vy += (p.ty - p.y) * 0.02; p.vx *= 0.86; p.vy *= 0.86;
+          p.vx += (p.tx - p.x) * 0.018; p.vy += (p.ty - p.y) * 0.018; p.vx *= 0.85; p.vy *= 0.85;
           p.x += p.vx; p.y += p.vy;
           if (Math.abs(p.vx) + Math.abs(p.vy) > 0.05) alive = true; else { p.x = p.tx; p.y = p.ty; }
         } else {
-          p.vy += 0.35; p.x += p.vx; p.y += p.vy;
+          p.vy += 0.33; p.x += p.vx; p.y += p.vy;
           if (p.x < 2 || p.x > W - 2) p.vx *= -1;
-          if (p.y >= p.land) { p.y = p.land; if (Math.abs(p.vy) > 2.5) { p.vy *= -0.35; p.vx *= 0.7; alive = true; } else p.dead = true; }
+          if (p.y >= p.land) { p.y = p.land; if (Math.abs(p.vy) > 2.4) { p.vy *= -0.35; p.vx *= 0.7; alive = true; } else p.dead = true; }
           else alive = true;
         }
       }
@@ -463,31 +531,113 @@ section { margin-top: 40px; }
     }
     function draw() {
       ctx.clearRect(0, 0, W, H);
+      if (sampler.underlay) sampler.underlay(ctx, W, H, { line: css('--line'), gold: colA });
       for (const p of parts) {
         ctx.beginPath(); ctx.arc(p.x, p.y, p.r, 0, 6.2832);
-        ctx.fillStyle = p.tx !== null ? colAccent : (p.dead ? colRubble : colAccent);
-        ctx.globalAlpha = p.dead ? 0.7 : 1;
-        ctx.fill();
+        ctx.fillStyle = p.dead ? colR : (p.tone ? colB : colA);
+        ctx.globalAlpha = p.dead ? 0.85 : 1; ctx.fill();
       }
       ctx.globalAlpha = 1;
     }
+    function recolor() { colA = css('--gold'); colB = css('--gold-2'); colR = css('--rubble'); draw(); }
+    function clear() {
+      const r = stage.getBoundingClientRect(); dpr = Math.min(2, devicePixelRatio || 1);
+      W = Math.max(240, Math.floor(r.width)); H = Math.floor(r.height);
+      cv.width = W * dpr; cv.height = H * dpr; ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      cancelAnimationFrame(raf); parts = []; draw();
+    }
     let rt; addEventListener('resize', () => { clearTimeout(rt); rt = setTimeout(build, 200); });
-    matchMedia('(prefers-color-scheme: dark)').addEventListener?.('change', () => { colAccent = css('--accent'); colRubble = css('--rubble'); draw(); });
-    const ready = (document.fonts && document.fonts.load) ? document.fonts.load('80px "Yatra One"').catch(() => {}) : Promise.resolve();
-    ready.then(build);
-    return { setWeight(w) { if (w !== weight) { weight = w; if (W) build(); } } };
+    matchMedia('(prefers-color-scheme: dark)').addEventListener?.('change', recolor);
+    return { build, recolor, clear, ok: true };
+  }
+
+  // Hero: the wordmark
+  const dots = (() => {
+    const hero = $('#hero'), stage = $('.stage', hero);
+    let weight = 0;
+    const sampler = (W, H) => {
+      const off = document.createElement('canvas'); off.width = W; off.height = H;
+      const o = off.getContext('2d');
+      const lines = W < 560 ? ['Kaun', 'Phasa?'] : ['Kaun Phasa?'];
+      let size = Math.min(W * (lines.length > 1 ? 0.28 : 0.17), 190);
+      const font = s => `italic 500 ${s}px "Fraunces", Georgia, serif`;
+      o.font = font(size);
+      const fits = () => Math.max(...lines.map(l => o.measureText(l).width)) <= W * 0.94 && size * 0.95 * lines.length <= (H - 24) * 0.92;
+      while (!fits() && size > 24) { size -= 4; o.font = font(size); }
+      o.fillStyle = '#fff'; o.textAlign = 'center'; o.textBaseline = 'middle';
+      const lh = size * 0.95, y0 = (H - 24) / 2 - (lines.length - 1) * lh / 2;
+      lines.forEach((l, i) => o.fillText(l, W / 2, y0 + i * lh));
+      const img = o.getImageData(0, 0, W, H).data, step = W < 520 ? 3 : 4, targets = [];
+      for (let y = 0; y < H - 24; y += step) for (let x = 0; x < W; x += step) if (img[(y * W + x) * 4 + 3] > 140) targets.push({ x, y });
+      return { targets, extra: Math.max(100, Math.min(700, 560 - weight * 50)), r: 1.3 };
+    };
+    const field = makeField(stage, $('#dots'), sampler);
+    if (!field.ok) hero.classList.add('no-canvas');
+    let built = false;
+    const ready = (document.fonts && document.fonts.load) ? document.fonts.load('italic 500 80px "Fraunces"').catch(() => {}) : Promise.resolve();
+    ready.then(() => { built = true; field.build(); });
+    return { recolor: field.recolor, setWeight(w) { if (w !== weight) { weight = w; if (built) field.build(); } } };
   })();
 
-  // ---------- Owner editing ----------
+  // Hall of fame: knots on a timeline. Each married member is a disc of dots sitting on the line.
+  const fame = (() => {
+    const stage = $('#fameStage'), labels = $('#fameLabels');
+    let nodes = [], key = '';
+    const LINE_Y = 120, PAD = 70, SLOT = 130;
+    const xs = W => nodes.map((_, i) => nodes.length === 1 ? W / 2 : PAD + i * (W - 2 * PAD) / (nodes.length - 1));
+    const sampler = (W, H) => {
+      const targets = [], X = xs(W), R = 19;
+      X.forEach(x => {
+        for (let y = -R; y <= R; y += 3) for (let dx = -R; dx <= R; dx += 3) if (dx * dx + y * y <= R * R) targets.push({ x: x + dx, y: LINE_Y + y });
+        for (let y = R + 4; y < R + 26; y += 3) targets.push({ x, y: LINE_Y + y });   // a short stem to the label
+      });
+      return { targets, extra: Math.max(80, 320 - nodes.length * 20), r: 1.4 };
+    };
+    sampler.underlay = (ctx, W, H, c) => {
+      ctx.strokeStyle = c.gold; ctx.globalAlpha = .7; ctx.lineWidth = 1;
+      ctx.beginPath(); ctx.moveTo(16, LINE_Y); ctx.lineTo(W - 16, LINE_Y); ctx.stroke();
+      ctx.globalAlpha = 1;
+      // an arrowhead: the line keeps going
+      ctx.beginPath(); ctx.moveTo(W - 16, LINE_Y); ctx.lineTo(W - 24, LINE_Y - 4); ctx.lineTo(W - 24, LINE_Y + 4); ctx.closePath(); ctx.fillStyle = c.gold; ctx.fill();
+    };
+    const field = makeField(stage, $('#fameDots'), sampler);
+    function layout() {
+      const outer = stage.parentElement.getBoundingClientRect().width || 600;
+      stage.style.width = Math.max(outer, PAD * 2 + (nodes.length - 1) * SLOT) + 'px';
+      const W = stage.getBoundingClientRect().width, X = xs(W);
+      let lastYear = null;
+      labels.innerHTML = nodes.map((n, i) => {
+        const yr = n.year !== lastYear ? `<div class="yr" style="left:${X[i]}px">${n.year}</div>` : '';
+        lastYear = n.year;
+        return yr + `<div class="lbl" style="left:${X[i]}px"><b>${esc(n.name)}</b><span>${esc(n.date)}</span></div>`;
+      }).join('');
+      if (!nodes.length) labels.innerHTML = '<div class="lbl" style="left:50%;top:60px;width:260px"><span>Abhi koi nahi phasa. Historic.</span></div>';
+      if (inView) field.build(); else field.clear();
+    }
+    // The drop happens when the timeline scrolls into view, and replays each time it comes back.
+    let inView = false;
+    if ('IntersectionObserver' in window) {
+      new IntersectionObserver(entries => {
+        for (const e of entries) {
+          const was = inView; inView = e.isIntersecting && e.intersectionRatio >= 0.35;
+          if (inView && !was) field.build();
+        }
+      }, { threshold: [0, 0.35] }).observe(stage);
+    } else { inView = true; }
+    addEventListener('resize', () => setTimeout(layout, 220));
+    return { recolor: field.recolor, setNodes(list) { const k = JSON.stringify(list); if (k === key) return; key = k; nodes = list; layout(); } };
+  })();
+
+  // Owner editing
   let editing = null;
   function openDrawer(slug) {
     editing = slug ? state.members.find(m => m.slug === slug) : null;
     $('#drawerTitle').textContent = editing ? `Edit: ${editing.name}` : 'Naya bakra';
     $('#f_name').value = editing?.name || ''; $('#f_status').value = editing?.status || 'single';
     $('#f_partner').value = editing?.partner || ''; $('#f_city').value = editing?.city || '';
-    $('#f_date').value = editing?.weddingDate || ''; $('#f_notes').value = editing?.notes || '';
+    $('#f_date').value = editing?.weddingDate || ''; $('#f_notes').value = editing?.notes || ''; $('#f_roast').value = editing?.roast || '';
     $('#evrows').innerHTML = ''; (editing?.events || []).forEach(addEvRow);
-    $('#delBtn').hidden = !editing; $('#statusMsg').textContent = ''; $('#statusMsg').className = 'status-msg';
+    $('#delBtn').hidden = !editing; $('#statusMsg').textContent = ''; $('#statusMsg').className = 'status-msg'; delete $('#statusMsg').dataset.confirm;
     $('#drawer').hidden = false; $('#drawerBg').hidden = false; $('#f_name').focus();
   }
   function closeDrawer() { $('#drawer').hidden = true; $('#drawerBg').hidden = true; }
@@ -495,8 +645,8 @@ section { margin-top: 40px; }
     const i = $('#evrows').children.length;
     const d = document.createElement('div'); d.className = 'evrow';
     d.innerHTML = `
-      <select id="ev_type_${i}" aria-label="Event type">${EV_TYPES.map(t => `<option ${t === (e.type || 'Baraat / Pheras') ? 'selected' : ''}>${t}</option>`).join('')}</select>
-      <input id="ev_date_${i}" type="date" value="${esc(e.date || '')}" aria-label="Event date">
+      <select id="ev_type_${i}" aria-label="Function type">${EV_TYPES.map(t => `<option ${t === (e.type || 'Baraat / Pheras') ? 'selected' : ''}>${t}</option>`).join('')}</select>
+      <input id="ev_date_${i}" type="date" value="${esc(e.date || '')}" aria-label="Date">
       <input id="ev_venue_${i}" placeholder="venue / shehar" value="${esc(e.venue || '')}" aria-label="Venue">
       <input id="ev_dress_${i}" placeholder="dress code" value="${esc(e.dress || '')}" aria-label="Dress code">
       <button type="button" class="btn small danger full">Remove</button>`;
@@ -508,9 +658,12 @@ section { margin-top: 40px; }
       type: r.querySelector('select').value, date: r.querySelectorAll('input')[0].value,
       venue: r.querySelectorAll('input')[1].value.trim(), dress: r.querySelectorAll('input')[2].value.trim()
     })).filter(e => e.date || e.venue);
-    const name = $('#f_name').value.trim();
-    return { slug: editing?.slug || slugify(name), name, status: $('#f_status').value, partner: $('#f_partner').value.trim(),
-      city: $('#f_city').value.trim(), weddingDate: $('#f_date').value, notes: $('#f_notes').value.trim(), events };
+    const name = $('#f_name').value.trim(), status = $('#f_status').value;
+    const others = state.members.filter(x => x.slug !== (editing?.slug || slugify(name)));
+    const typed = $('#f_roast').value.trim();
+    const roast = typed || (editing && editing.status === status && editing.roast) || pickRoast(status, others);
+    return { slug: editing?.slug || slugify(name), name, status, partner: $('#f_partner').value.trim(),
+      city: $('#f_city').value.trim(), weddingDate: $('#f_date').value, notes: $('#f_notes').value.trim(), roast, events };
   }
   async function publish(nextState, msgEl) {
     const dt = new Date(), pad = n => String(n).padStart(2, '0');
@@ -518,7 +671,6 @@ section { margin-top: 40px; }
     const json = JSON.stringify(nextState).replace(/<\//g, '<\\/');
     $('#saveBtn').disabled = true; msgEl.textContent = 'Publish ho raha hai…'; msgEl.className = 'status-msg';
     try {
-      // Prefer the served source (exact skeleton); fall back to the pristine DOM capture.
       let src = TEMPLATE;
       try { const r = await fetch(location.href, { cache: 'no-store' }); if (r.ok) { const t = await r.text(); if (LEDGER_RE.test(t)) src = t; } } catch (_) {}
       if (!LEDGER_RE.test(src)) throw { code: 'template' };
@@ -534,8 +686,7 @@ section { margin-top: 40px; }
   $('#form').addEventListener('submit', ev => {
     ev.preventDefault();
     const m = readForm(); if (!m.name) return;
-    const members = state.members.filter(x => x.slug !== m.slug).concat([m]);
-    publish({ ...state, members }, $('#statusMsg'));
+    publish({ ...state, members: state.members.filter(x => x.slug !== m.slug).concat([m]) }, $('#statusMsg'));
   });
   $('#delBtn').addEventListener('click', () => {
     if (!editing) return;
@@ -549,17 +700,34 @@ section { margin-top: 40px; }
   $('#addBtn').addEventListener('click', () => openDrawer(null));
   addEventListener('keydown', e => { if (e.key === 'Escape' && !$('#drawer').hidden) closeDrawer(); });
 
+  // Theme toggle: explicit choice saved per viewer; otherwise follow the system.
+  const root = document.documentElement;
+  const isDarkNow = () => root.dataset.theme ? root.dataset.theme === 'dark' : matchMedia('(prefers-color-scheme: dark)').matches;
+  try { const t = localStorage.getItem('kp-theme'); if (t === 'light' || t === 'dark') root.dataset.theme = t; } catch (_) {}
+  function paintTheme() {
+    const dark = isDarkNow();
+    $('#themeDark').classList.toggle('on', dark); $('#themeLight').classList.toggle('on', !dark);
+    $('#themeDark').setAttribute('aria-pressed', String(dark)); $('#themeLight').setAttribute('aria-pressed', String(!dark));
+  }
+  function setTheme(next) {
+    root.dataset.theme = next;
+    try { localStorage.setItem('kp-theme', next); } catch (_) {}
+    paintTheme(); dots.recolor(); fame.recolor();
+  }
+  $('#themeLight').addEventListener('click', () => setTheme('light'));
+  $('#themeDark').addEventListener('click', () => setTheme('dark'));
+  matchMedia('(prefers-color-scheme: dark)').addEventListener?.('change', paintTheme);
+  paintTheme();
+
   render();
 
-  // Light up editing for the owner / editors once the runtime answers.
   (async () => {
     try {
       const user = await window.claude?.use?.('user');
-      const ok = user ? await user.canEdit() : false;
-      if (!ok) return;
+      if (!user || !(await user.canEdit())) return;
       artifact = await window.claude?.use?.('artifact');
       if (!artifact) return;
-      canWrite = true; $('#ownerbar').hidden = false; render();
+      canWrite = true; $('#adminbar').hidden = false; render();
     } catch (_) { /* read-only view */ }
   })();
 })();
