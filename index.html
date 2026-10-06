@@ -68,11 +68,8 @@ button { font: inherit; cursor: pointer; color: inherit; }
 /* Masthead */
 .mast { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding-block: 18px 6px; flex-wrap: wrap; }
 .mast .brand { font-size: .92rem; font-weight: 600; letter-spacing: .04em; color: var(--ink-2); }
-.theme { display: inline-flex; border: 1px solid var(--line); border-radius: 999px; padding: 3px; background: var(--paper-2); gap: 2px; }
-.theme .opt { border: 0; background: transparent; border-radius: 999px; padding: 6px 12px; font-size: .82rem; font-weight: 600; letter-spacing: .04em; color: var(--ink-2); display: inline-flex; gap: 6px; align-items: center; }
-.theme .opt span { color: var(--gold); }
-.theme .opt.on { background: var(--ink); color: var(--paper); }
-.theme .opt.on span { color: var(--gold-2); }
+.theme { width: 38px; height: 38px; border-radius: 50%; border: 1px solid var(--line); background: var(--card); display: grid; place-items: center; font-size: 1.05rem; line-height: 1; color: var(--gold); }
+.theme:hover { border-color: var(--gold); }
 .mast .season { font-size: .78rem; letter-spacing: .14em; text-transform: uppercase; color: var(--ink-2); border: 1px solid var(--line); border-radius: 999px; padding: 6px 12px; }
 
 /* Hero */
@@ -199,7 +196,7 @@ section { padding-block: 48px 0; }
     <div class="brand">Chemisquad · IIT Roorkee</div>
     <div style="display:flex;gap:8px;align-items:center">
       <div class="season" id="season">Shaadi season 2026–27</div>
-      <div class="theme" role="group" aria-label="Theme"><button type="button" id="themeLight" class="opt light" aria-pressed="false"><span aria-hidden="true">&#9728;</span> Din</button><button type="button" id="themeDark" class="opt dark" aria-pressed="false"><span aria-hidden="true">&#9790;</span> Raat</button></div>
+      <button type="button" id="themeBtn" class="theme" aria-label="Switch to night mode" title="Night mode"><span id="themeIcon" aria-hidden="true">&#9790;</span></button>
     </div>
   </div>
 
@@ -700,24 +697,23 @@ section { padding-block: 48px 0; }
   $('#addBtn').addEventListener('click', () => openDrawer(null));
   addEventListener('keydown', e => { if (e.key === 'Escape' && !$('#drawer').hidden) closeDrawer(); });
 
-  // Theme toggle: explicit choice saved per viewer; otherwise follow the system.
+  // Theme: light by default; a tap switches to night and the choice is remembered on this device.
   const root = document.documentElement;
-  const isDarkNow = () => root.dataset.theme ? root.dataset.theme === 'dark' : matchMedia('(prefers-color-scheme: dark)').matches;
-  try { const t = localStorage.getItem('kp-theme'); if (t === 'light' || t === 'dark') root.dataset.theme = t; } catch (_) {}
+  let theme = 'light';
+  try { const t = localStorage.getItem('kp-theme'); if (t === 'light' || t === 'dark') theme = t; } catch (_) {}
   function paintTheme() {
-    const dark = isDarkNow();
-    $('#themeDark').classList.toggle('on', dark); $('#themeLight').classList.toggle('on', !dark);
-    $('#themeDark').setAttribute('aria-pressed', String(dark)); $('#themeLight').setAttribute('aria-pressed', String(!dark));
+    root.dataset.theme = theme;
+    const dark = theme === 'dark';
+    $('#themeIcon').innerHTML = dark ? '&#9728;' : '&#9790;';
+    $('#themeBtn').setAttribute('aria-label', dark ? 'Switch to day mode' : 'Switch to night mode');
+    $('#themeBtn').title = dark ? 'Day mode' : 'Night mode';
   }
-  function setTheme(next) {
-    root.dataset.theme = next;
-    try { localStorage.setItem('kp-theme', next); } catch (_) {}
-    paintTheme(); dots.recolor(); fame.recolor();
-  }
-  $('#themeLight').addEventListener('click', () => setTheme('light'));
-  $('#themeDark').addEventListener('click', () => setTheme('dark'));
-  matchMedia('(prefers-color-scheme: dark)').addEventListener?.('change', paintTheme);
   paintTheme();
+  $('#themeBtn').addEventListener('click', () => {
+    theme = theme === 'dark' ? 'light' : 'dark';
+    try { localStorage.setItem('kp-theme', theme); } catch (_) {}
+    paintTheme(); dots.recolor(); fame.recolor();
+  });
 
   render();
 
