@@ -1,0 +1,568 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<style>:root{color-scheme:light}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
+<title>Kaun Phasa?</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Yatra+One&family=Baloo+2:wght@400;500;600;700;800&display=swap">
+<style>
+/* Layout: a dark "shaadi night" ledger. Particle marquee on top, scoreboard strip, a dated timeline, then a three-column roster. */
+:root {
+  --bg: #f6f2ff;
+  --bg-2: #ece6fb;
+  --surface: #ffffff;
+  --line: #d9d1f0;
+  --fg: #22193f;
+  --muted: #6d6687;
+  --accent: #d48d06;        /* genda / marigold */
+  --accent-ink: #1e1500;
+  --married: #2a8a56;       /* mehendi */
+  --engaged: #cf3f2a;       /* sindoor */
+  --single: #6f6a8a;        /* ash */
+  --rubble: #b6afd1;
+  --shadow: 0 10px 30px rgba(50, 30, 110, .12);
+  --display: "Yatra One", "Baloo 2", "Segoe UI", system-ui, sans-serif;
+  --body: "Baloo 2", "Segoe UI", system-ui, -apple-system, sans-serif;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #171231; --bg-2: #1f1840; --surface: #251c4a; --line: #3a2f6a;
+    --fg: #f6efe0; --muted: #a79fc6; --accent: #f5b82e; --accent-ink: #1e1500;
+    --married: #4fc17f; --engaged: #ff6a52; --single: #a39dc2; --rubble: #4a4170;
+    --shadow: 0 10px 30px rgba(0, 0, 0, .35);
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #171231; --bg-2: #1f1840; --surface: #251c4a; --line: #3a2f6a;
+  --fg: #f6efe0; --muted: #a79fc6; --accent: #f5b82e; --accent-ink: #1e1500;
+  --married: #4fc17f; --engaged: #ff6a52; --single: #a39dc2; --rubble: #4a4170;
+  --shadow: 0 10px 30px rgba(0, 0, 0, .35);
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+body {
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--body);
+  font-size: 16px;
+  line-height: 1.45;
+  margin: 0;
+}
+.wrap { max-width: 1120px; margin: 0 auto; padding-inline: 16px; padding-block: 0 48px; }
+h1, h2, h3 { text-wrap: balance; margin: 0; }
+h2 { font-family: var(--display); font-weight: 400; font-size: clamp(1.4rem, 2.6vw, 1.9rem); letter-spacing: .01em; }
+.eyebrow { text-transform: uppercase; letter-spacing: .14em; font-size: .72rem; font-weight: 700; color: var(--muted); }
+button { font: inherit; cursor: pointer; }
+button:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible, .card:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+
+/* Hero */
+.hero { position: relative; height: 300px; overflow: hidden; background: linear-gradient(180deg, var(--bg-2), var(--bg)); }
+.hero canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+.hero .fallback { position: absolute; inset: 0; display: grid; place-items: center; font-family: var(--display); font-size: clamp(2.6rem, 9vw, 6rem); color: var(--accent); text-align: center; pointer-events: none; opacity: 0; }
+.hero.no-canvas .fallback { opacity: 1; }
+.tagline { text-align: center; padding-block: 18px 8px; color: var(--muted); font-size: 1.05rem; }
+.tagline strong { color: var(--fg); font-weight: 600; }
+
+/* Scoreboard */
+.score { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px; margin-top: 18px; }
+.tile { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 14px 16px; min-width: 0; }
+.tile .num { font-family: var(--display); font-size: 2.4rem; line-height: 1; font-variant-numeric: tabular-nums; }
+.tile .lbl { color: var(--muted); font-weight: 600; margin-top: 4px; }
+.tile.next { grid-column: span 2; border-color: var(--accent); background: linear-gradient(135deg, color-mix(in srgb, var(--accent) 18%, var(--surface)), var(--surface)); }
+.tile.next .num { font-size: 1.6rem; line-height: 1.2; }
+.tile.married .num { color: var(--married); }
+.tile.engaged .num { color: var(--engaged); }
+.tile.single .num { color: var(--single); }
+@media (max-width: 520px) { .tile.next { grid-column: 1 / -1; } }
+
+/* Sections */
+section { margin-top: 40px; }
+.sec-head { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; flex-wrap: wrap; margin-bottom: 14px; }
+.sec-head p { margin: 0; color: var(--muted); }
+
+/* Timeline */
+.timeline { display: grid; gap: 10px; }
+.ev { display: grid; grid-template-columns: 68px 1fr auto; gap: 14px; align-items: center; background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 12px 14px; min-width: 0; }
+.ev .date { text-align: center; border-right: 1px solid var(--line); padding-right: 12px; }
+.ev .date .d { font-family: var(--display); font-size: 1.7rem; line-height: 1; font-variant-numeric: tabular-nums; }
+.ev .date .m { text-transform: uppercase; font-size: .72rem; letter-spacing: .12em; color: var(--muted); font-weight: 700; }
+.ev .what { min-width: 0; }
+.ev .what .t { font-weight: 700; }
+.ev .what .t span { color: var(--muted); font-weight: 500; }
+.ev .what .w { color: var(--muted); font-size: .92rem; overflow-wrap: anywhere; }
+.chip { display: inline-block; border-radius: 999px; padding: 3px 10px; font-size: .78rem; font-weight: 700; white-space: nowrap; border: 1px solid transparent; }
+.chip.soon { background: var(--accent); color: var(--accent-ink); }
+.chip.far { background: var(--bg-2); color: var(--fg); border-color: var(--line); }
+.chip.done { background: var(--bg-2); color: var(--muted); border-color: var(--line); }
+.chip.tba { background: color-mix(in srgb, var(--engaged) 15%, var(--surface)); color: var(--engaged); border-color: color-mix(in srgb, var(--engaged) 40%, transparent); }
+.ev.tba .date .d { font-size: 1.3rem; color: var(--engaged); }
+.empty { background: var(--surface); border: 1px dashed var(--line); border-radius: 14px; padding: 18px; color: var(--muted); text-align: center; }
+@media (max-width: 520px) { .ev { grid-template-columns: 56px 1fr; } .ev .chip { grid-column: 2; justify-self: start; } }
+
+/* Roster */
+.roster { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+@media (max-width: 860px) { .roster { grid-template-columns: 1fr; } }
+.col { background: var(--bg-2); border-radius: 18px; padding: 14px; min-width: 0; }
+.col-head { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-bottom: 12px; }
+.col-head h3 { font-family: var(--display); font-weight: 400; font-size: 1.25rem; }
+.col-head .count { font-variant-numeric: tabular-nums; font-weight: 800; border-radius: 999px; padding: 2px 10px; background: var(--surface); border: 1px solid var(--line); }
+.col.married .col-head h3 { color: var(--married); }
+.col.engaged .col-head h3 { color: var(--engaged); }
+.col.single .col-head h3 { color: var(--single); }
+.cards { display: grid; gap: 8px; }
+.card { display: grid; grid-template-columns: 40px 1fr; gap: 10px; align-items: center; background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 10px 12px; min-width: 0; text-align: left; color: inherit; width: 100%; }
+.card.editable { cursor: pointer; }
+.card.editable:hover { border-color: var(--accent); }
+.av { width: 40px; height: 40px; border-radius: 50%; display: grid; place-items: center; font-weight: 800; font-size: .9rem; color: #fff; }
+.col.married .av { background: var(--married); }
+.col.engaged .av { background: var(--engaged); }
+.col.single .av { background: var(--single); }
+.card .n { font-weight: 700; line-height: 1.2; }
+.card .q { color: var(--muted); font-size: .88rem; line-height: 1.3; overflow-wrap: anywhere; }
+.card .q b { color: var(--fg); font-weight: 600; }
+.col-empty { color: var(--muted); font-size: .9rem; padding: 10px; text-align: center; }
+
+/* Quirks footer */
+.quirks { margin-top: 44px; text-align: center; border-top: 1px solid var(--line); padding-top: 22px; }
+.quirks .line { font-family: var(--display); font-size: clamp(1.1rem, 2.4vw, 1.5rem); color: var(--accent); min-height: 2.2em; transition: opacity .4s; }
+.quirks .meta { color: var(--muted); font-size: .85rem; margin-top: 10px; }
+@media (prefers-reduced-motion: reduce) { .quirks .line { transition: none; } }
+
+/* Owner bar + drawer */
+.ownerbar { display: flex; gap: 10px; align-items: center; justify-content: space-between; flex-wrap: wrap; background: var(--surface); border: 1px solid var(--accent); border-radius: 12px; padding: 10px 14px; margin-top: 18px; }
+.ownerbar p { margin: 0; color: var(--muted); font-size: .92rem; }
+.btn { border: 1px solid var(--line); background: var(--surface); color: var(--fg); border-radius: 10px; padding: 8px 14px; font-weight: 700; }
+.btn.primary { background: var(--accent); color: var(--accent-ink); border-color: transparent; }
+.btn.danger { color: var(--engaged); border-color: color-mix(in srgb, var(--engaged) 50%, transparent); }
+.btn.small { padding: 4px 10px; font-size: .85rem; }
+.btn:disabled { opacity: .5; cursor: default; }
+.drawer-bg { position: fixed; inset: 0; background: rgba(10, 5, 30, .55); z-index: 20; }
+.drawer { position: fixed; top: 0; right: 0; bottom: 0; width: min(520px, 100%); background: var(--bg); z-index: 21; overflow-y: auto; padding: 18px 18px calc(18px + env(safe-area-inset-bottom, 0px)); padding-top: calc(18px + env(safe-area-inset-top, 0px)); box-shadow: var(--shadow); }
+.drawer h2 { margin-bottom: 12px; }
+.field { display: grid; gap: 4px; margin-bottom: 12px; }
+.field label { font-size: .8rem; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: .08em; }
+.field input, .field select, .field textarea { font: inherit; padding: 8px 10px; border-radius: 10px; border: 1px solid var(--line); background: var(--surface); color: var(--fg); width: 100%; }
+.row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+@media (max-width: 420px) { .row2 { grid-template-columns: 1fr; } }
+.evrows { display: grid; gap: 8px; }
+.evrow { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 8px; }
+.evrow input, .evrow select { font: inherit; padding: 6px 8px; border-radius: 8px; border: 1px solid var(--line); background: var(--bg); color: var(--fg); width: 100%; min-width: 0; }
+.evrow .full { grid-column: 1 / -1; }
+.drawer-actions { display: flex; gap: 8px; flex-wrap: wrap; justify-content: space-between; margin-top: 16px; }
+.status-msg { margin-top: 10px; font-size: .9rem; color: var(--muted); min-height: 1.3em; }
+.status-msg.err { color: var(--engaged); }
+</style>
+
+</head>
+<body>
+<header class="hero" id="hero">
+  <canvas id="dots" aria-hidden="true"></canvas>
+  <div class="fallback">Kaun Phasa?</div>
+  <h1 class="sr" style="position:absolute;left:-9999px">Kaun Phasa? Batch wedding ledger</h1>
+</header>
+
+<main class="wrap">
+  <p class="tagline">Batch ka official shaadi ledger. <strong>Kaun phas gaya, kaun phasne wala hai, aur baraat kab hai.</strong> Updates aate rahenge, laddoo bhi.</p>
+
+  <div class="ownerbar" id="ownerbar" hidden>
+    <p>Tu admin hai. Kisi bhi card pe click karke date, shehar ya events update kar. Save karte hi sabko dikhega.</p>
+    <button class="btn primary" id="addBtn">+ Naya bakra</button>
+  </div>
+
+  <div class="score" id="score"></div>
+
+  <section id="timelineSec">
+    <div class="sec-head">
+      <h2>Agla baraat</h2>
+      <p>Haldi se reception tak, sab ek jagah. Flights jaldi book karo.</p>
+    </div>
+    <div class="timeline" id="timeline"></div>
+  </section>
+
+  <section>
+    <div class="sec-head">
+      <h2>Batch ka register</h2>
+      <p>Status self-reported hai. Galat lage toh admin ko WhatsApp karo.</p>
+    </div>
+    <div class="roster" id="roster"></div>
+  </section>
+
+  <footer class="quirks">
+    <div class="line" id="quirk">Shaadi ka laddoo: jo khaye woh pachtaye, jo na khaye woh bhi pachtaye.</div>
+    <div class="meta" id="meta"></div>
+  </footer>
+</main>
+
+<div id="drawerBg" class="drawer-bg" hidden></div>
+<aside id="drawer" class="drawer" hidden aria-label="Edit member">
+  <h2 id="drawerTitle">Edit</h2>
+  <form id="form">
+    <div class="field"><label for="f_name">Naam</label><input id="f_name" required maxlength="60"></div>
+    <div class="row2">
+      <div class="field"><label for="f_status">Status</label>
+        <select id="f_status">
+          <option value="single">At large (single)</option>
+          <option value="engaged">Trap scheduled (engaged)</option>
+          <option value="married">Phas gaye (married)</option>
+        </select>
+      </div>
+      <div class="field"><label for="f_partner">Partner</label><input id="f_partner" maxlength="60" placeholder="optional"></div>
+    </div>
+    <div class="row2">
+      <div class="field"><label for="f_city">Shehar / venue</label><input id="f_city" maxlength="80" placeholder="e.g. Jaipur"></div>
+      <div class="field"><label for="f_date">Shaadi ki date</label><input id="f_date" type="date"></div>
+    </div>
+    <div class="field"><label for="f_notes">Notes</label><textarea id="f_notes" rows="2" maxlength="200" placeholder="dress code, hotel, kuch bhi"></textarea></div>
+    <div class="field">
+      <label>Events</label>
+      <div class="evrows" id="evrows"></div>
+      <div style="margin-top:8px"><button type="button" class="btn small" id="addEv">+ Event</button></div>
+    </div>
+    <div class="drawer-actions">
+      <button type="button" class="btn danger" id="delBtn">Hatao</button>
+      <span style="display:flex;gap:8px">
+        <button type="button" class="btn" id="cancelBtn">Cancel</button>
+        <button type="submit" class="btn primary" id="saveBtn">Save &amp; publish</button>
+      </span>
+    </div>
+    <div class="status-msg" id="statusMsg"></div>
+  </form>
+</aside>
+
+<!-- DATA: the ledger. Edits by the owner regenerate this block and republish the page. -->
+<script type="application/json" id="ledger">
+{"updated":"2026-10-06","members":[
+{"slug": "lakshya-kumawat", "name": "Lakshya Kumawat", "status": "married", "partner": "", "city": "", "weddingDate": "2024-04-21", "notes": "Admin. Khud phasa, ab register sambhal raha hai.", "events": [{"type": "Functions", "date": "2024-04-20", "venue": "", "dress": ""}, {"type": "Baraat / Pheras", "date": "2024-04-21", "venue": "", "dress": ""}]},
+{"slug": "ankit-kharpuse", "name": "Ankit Kharpuse", "status": "married", "partner": "", "city": "", "weddingDate": "", "notes": "", "events": []},
+{"slug": "milan", "name": "Milan", "status": "married", "partner": "", "city": "", "weddingDate": "2026-02-08", "notes": "", "events": [{"type": "Functions", "date": "2026-02-07", "venue": "", "dress": ""}, {"type": "Baraat / Pheras", "date": "2026-02-08", "venue": "", "dress": ""}]},
+{"slug": "pawan-nagar", "name": "Pawan Nagar", "status": "married", "partner": "", "city": "", "weddingDate": "", "notes": "", "events": []},
+{"slug": "sagar-solanki", "name": "Sagar Solanki", "status": "married", "partner": "", "city": "", "weddingDate": "2020-12-11", "notes": "", "events": [{"type": "Functions", "date": "2020-12-10", "venue": "", "dress": ""}, {"type": "Baraat / Pheras", "date": "2020-12-11", "venue": "", "dress": ""}]},
+{"slug": "kunal-satpal", "name": "Kunal Satpal", "status": "married", "partner": "", "city": "", "weddingDate": "", "notes": "", "events": []},
+{"slug": "vishal-choudhary", "name": "Vishal Choudhary", "status": "engaged", "partner": "", "city": "Delhi / Jaipur", "weddingDate": "2027-02-09", "notes": "", "events": [{"type": "Functions", "date": "2027-02-07", "venue": "Delhi", "dress": ""}, {"type": "Functions", "date": "2027-02-08", "venue": "Delhi / Jaipur", "dress": ""}, {"type": "Baraat / Pheras", "date": "2027-02-09", "venue": "Jaipur", "dress": ""}]},
+{"slug": "shubhangit-katiyar", "name": "Shubhangit Katiyar", "status": "engaged", "partner": "", "city": "Kanpur", "weddingDate": "2026-12-07", "notes": "", "events": [{"type": "Functions", "date": "2026-12-06", "venue": "Kanpur", "dress": ""}, {"type": "Baraat / Pheras", "date": "2026-12-07", "venue": "Kanpur", "dress": ""}]},
+{"slug": "sahat-prasad", "name": "Sahat Prasad", "status": "engaged", "partner": "", "city": "Nagpur", "weddingDate": "2027-01-25", "notes": "", "events": [{"type": "Functions", "date": "2027-01-24", "venue": "Nagpur", "dress": ""}, {"type": "Baraat / Pheras", "date": "2027-01-25", "venue": "Nagpur", "dress": ""}]},
+{"slug": "ashish-roorkee", "name": "Ashish", "status": "engaged", "partner": "", "city": "Bodh Gaya", "weddingDate": "2027-03-01", "notes": "", "events": [{"type": "Functions", "date": "2027-02-28", "venue": "Bodh Gaya", "dress": ""}, {"type": "Baraat / Pheras", "date": "2027-03-01", "venue": "Bodh Gaya", "dress": ""}]},
+{"slug": "shivam-sachan", "name": "Shivam Sachan", "status": "engaged", "partner": "", "city": "Kanpur", "weddingDate": "2026-11-24", "notes": "", "events": [{"type": "Baraat / Pheras", "date": "2026-11-24", "venue": "Kanpur", "dress": ""}]},
+{"slug": "darshan-s-narayan", "name": "Darshan S. Narayan", "status": "single", "partner": "", "city": "", "weddingDate": "", "notes": "", "events": []},
+{"slug": "akshit", "name": "Akshit", "status": "single", "partner": "", "city": "", "weddingDate": "", "notes": "", "events": []},
+{"slug": "bhanu", "name": "Bhanu", "status": "single", "partner": "", "city": "", "weddingDate": "", "notes": "", "events": []},
+{"slug": "chirag-garg", "name": "Chirag Garg", "status": "single", "partner": "", "city": "", "weddingDate": "", "notes": "", "events": []},
+{"slug": "dk", "name": "DK", "status": "single", "partner": "", "city": "", "weddingDate": "", "notes": "", "events": []},
+{"slug": "harsh-dohare", "name": "Harsh Dohare", "status": "single", "partner": "", "city": "", "weddingDate": "", "notes": "", "events": []},
+{"slug": "kapil", "name": "Kapil", "status": "single", "partner": "", "city": "", "weddingDate": "", "notes": "", "events": []},
+{"slug": "naman-sinha", "name": "Naman Sinha", "status": "single", "partner": "", "city": "", "weddingDate": "", "notes": "", "events": []},
+{"slug": "nirajsinh-rajput", "name": "Nirajsinh Rajput", "status": "single", "partner": "", "city": "", "weddingDate": "", "notes": "", "events": []},
+{"slug": "rishav-mansuri", "name": "Rishav Mansuri", "status": "single", "partner": "", "city": "", "weddingDate": "", "notes": "", "events": []},
+{"slug": "satvik-tedla", "name": "Satvik Tedla", "status": "single", "partner": "", "city": "", "weddingDate": "", "notes": "", "events": []},
+{"slug": "suyash-singh", "name": "Suyash Singh", "status": "single", "partner": "", "city": "", "weddingDate": "", "notes": "", "events": []},
+{"slug": "tanpreet", "name": "Tanpreet", "status": "single", "partner": "", "city": "", "weddingDate": "", "notes": "", "events": []},
+{"slug": "vivek-kumar", "name": "Vivek Kumar", "status": "single", "partner": "", "city": "", "weddingDate": "", "notes": "", "events": []},
+{"slug": "yogesh-nikose", "name": "Yogesh Nikose", "status": "single", "partner": "", "city": "", "weddingDate": "", "notes": "", "events": []}
+]}
+</script>
+
+<script>
+(() => {
+  // Capture the pristine document before any script touches the DOM: the template we republish from.
+  const TEMPLATE = document.documentElement.outerHTML;
+  const LEDGER_RE = /(<script type="application\/json" id="ledger">)([\s\S]*?)(<\/script>)/;
+
+  const $ = (s, r = document) => r.querySelector(s);
+  const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  let state = JSON.parse($('#ledger').textContent);
+  let canWrite = false, artifact = null;
+
+  const STATUS = {
+    married: { title: 'Phas gaye', emoji: '🪢', roasts: [
+      'Permanent plus-one unlocked.', 'Weekend plans: approval pending.', 'Sabzi ke daam ab pata hain.',
+      'Late night calls ab seen-zone mein.', 'Netflix password ab shared hai.', 'Gym ka naya naam: grocery run.'] },
+    engaged: { title: 'Trap scheduled', emoji: '💍', roasts: [
+      'Countdown chal raha hai.', 'Haldi ki taiyari, gym membership bhi.', 'Date bhejo, flights mehengi ho rahi hain.',
+      'Lehenga budget > laptop budget.', 'Guest list mein hum hain na?'] },
+    single: { title: 'At large', emoji: '🏃', roasts: [
+      'Rishta aunty radar: LOW.', 'Abhi bhi parole pe.', 'Mummy ne biodata ready rakha hai.',
+      'Bachelor party committee, lifetime member.', 'Ghar waale "beta kab" mode mein.', 'Shaadi.com ka ad skip karta hai.',
+      'Baraat mein nachne ke liye hamesha available.'] }
+  };
+  const QUIRKS = [
+    'Shaadi ka laddoo: jo khaye woh pachtaye, jo na khaye woh bhi pachtaye.',
+    '"Beta, ab settle ho jao." — har rishtedaar, har function pe.',
+    'Dulhe ka dost bano, baraat mein sabse aage nacho, khaane mein sabse pehle pahuncho.',
+    'Sangeet practice group ban gaya hai. Attendance mandatory.',
+    'Kab de rahe ho party? Shaadi se pehle ya baad mein, dono chalega.',
+    'Rule #1 of baraat: joota churane wali team se dosti rakho.',
+    'Jo abhi single hai, woh agle saal ke ledger mein dusri column mein hoga.',
+    'Haldi mein peele kapde pehno. Yellow Chemical batch ka official colour hai ab.'
+  ];
+  const EV_TYPES = ['Roka', 'Engagement', 'Haldi', 'Mehendi', 'Sangeet', 'Functions', 'Baraat / Pheras', 'Reception', 'Other'];
+
+  const today = () => { const d = new Date(); return new Date(d.getFullYear(), d.getMonth(), d.getDate()); };
+  const parseD = s => { if (!s) return null; const [y, m, d] = s.split('-').map(Number); return (y && m && d) ? new Date(y, m - 1, d) : null; };
+  const daysTo = d => Math.round((d - today()) / 86400000);
+  const MONTHS = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  const hash = s => { let h = 0; for (const c of s) h = (h * 31 + c.charCodeAt(0)) >>> 0; return h; };
+  const initials = n => n.split(/\s+/).filter(Boolean).slice(0, 2).map(w => w[0].toUpperCase()).join('');
+  const slugify = n => n.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '') || ('m-' + Date.now());
+
+  function chipFor(d) {
+    if (!d) return '<span class="chip tba">date TBA</span>';
+    const n = daysTo(d);
+    if (n < 0) return `<span class="chip done">ho gaya</span>`;
+    if (n === 0) return `<span class="chip soon">aaj!</span>`;
+    if (n <= 45) return `<span class="chip soon">${n} din baaki</span>`;
+    return `<span class="chip far">${n} din</span>`;
+  }
+
+  function allEvents() {
+    const out = [];
+    for (const m of state.members) {
+      if (m.status === 'single') continue;
+      const evs = (m.events && m.events.length) ? m.events : (m.status === 'engaged' ? [{ type: 'Baraat / Pheras', date: m.weddingDate || '', venue: m.city || '' }] : []);
+      for (const e of evs) out.push({ ...e, who: m.name, slug: m.slug, d: parseD(e.date), venue: e.venue || m.city || '' });
+    }
+    return out;
+  }
+
+  function render() {
+    const counts = { married: 0, engaged: 0, single: 0 };
+    for (const m of state.members) counts[m.status] = (counts[m.status] || 0) + 1;
+
+    const upcoming = allEvents().filter(e => e.d && daysTo(e.d) >= 0).sort((a, b) => a.d - b.d);
+    const next = upcoming[0];
+    const nextText = next
+      ? `${next.who} · ${next.type} · ${daysTo(next.d) === 0 ? 'aaj' : daysTo(next.d) + ' din mein'}`
+      : 'Koi date nahi aayi abhi. Engaged log, jaldi batao.';
+    $('#score').innerHTML = `
+      <div class="tile married"><div class="num">${counts.married}</div><div class="lbl">Phas gaye</div></div>
+      <div class="tile engaged"><div class="num">${counts.engaged}</div><div class="lbl">Trap scheduled</div></div>
+      <div class="tile single"><div class="num">${counts.single}</div><div class="lbl">Abhi bhi at large</div></div>
+      <div class="tile next"><div class="eyebrow">Agla baraat</div><div class="num">${esc(nextText)}</div></div>`;
+
+    // Timeline
+    const evs = allEvents();
+    const dated = evs.filter(e => e.d).sort((a, b) => a.d - b.d);
+    const future = dated.filter(e => daysTo(e.d) >= 0), past = dated.filter(e => daysTo(e.d) < 0);
+    const tba = evs.filter(e => !e.d);
+    const evRow = e => `
+      <div class="ev ${e.d ? '' : 'tba'}">
+        <div class="date">${e.d ? `<div class="d">${e.d.getDate()}</div><div class="m">${MONTHS[e.d.getMonth()]} ${String(e.d.getFullYear()).slice(2)}</div>` : `<div class="d">?</div><div class="m">TBA</div>`}</div>
+        <div class="what"><div class="t">${esc(e.who)} <span>· ${esc(e.type || 'Function')}</span></div>
+          <div class="w">${esc(e.venue || 'Venue batana baaki hai')}${e.dress ? ' · dress: ' + esc(e.dress) : ''}</div></div>
+        ${chipFor(e.d)}
+      </div>`;
+    let tl = '';
+    if (!future.length && !tba.length && !past.length) tl = '<div class="empty">Abhi koi event nahi. Jaise hi koi date aaye, yahan dikhegi.</div>';
+    tl += future.map(evRow).join('');
+    if (tba.length) tl += `<div class="eyebrow" style="margin-top:10px">Date abhi aani hai</div>` + tba.map(evRow).join('');
+    if (past.length) tl += `<div class="eyebrow" style="margin-top:10px">Ho chuka</div>` + past.slice(-6).reverse().map(evRow).join('');
+    $('#timeline').innerHTML = tl;
+
+    // Roster
+    const card = m => {
+      const st = STATUS[m.status] || STATUS.single;
+      const roast = st.roasts[hash(m.slug) % st.roasts.length];
+      const d = parseD(m.weddingDate);
+      let line = roast;
+      if (m.status === 'married') line = (m.partner ? `<b>with ${esc(m.partner)}</b> · ` : '') + (d ? `since ${d.getDate()} ${MONTHS[d.getMonth()]} ${d.getFullYear()} · ` : '') + roast;
+      if (m.status === 'engaged') line = (d ? `<b>${daysTo(d) >= 0 ? daysTo(d) + ' din baaki' : 'ho gaya'}</b>${m.city ? ' · ' + esc(m.city) : ''} · ` : (m.city ? esc(m.city) + ' · ' : '')) + roast;
+      const tag = canWrite ? 'button' : 'div';
+      return `<${tag} class="card ${canWrite ? 'editable' : ''}" data-slug="${esc(m.slug)}" ${canWrite ? 'type="button"' : ''}>
+        <div class="av" aria-hidden="true">${esc(initials(m.name))}</div>
+        <div><div class="n">${esc(m.name)}</div><div class="q">${line}</div></div></${tag}>`;
+    };
+    const col = key => {
+      const list = state.members.filter(m => m.status === key).sort((a, b) => a.name.localeCompare(b.name));
+      return `<div class="col ${key}"><div class="col-head"><h3>${STATUS[key].title} ${STATUS[key].emoji}</h3><span class="count">${list.length}</span></div>
+        <div class="cards">${list.length ? list.map(card).join('') : '<div class="col-empty">Khaali. Abhi.</div>'}</div></div>`;
+    };
+    $('#roster').innerHTML = col('married') + col('engaged') + col('single');
+
+    $('#meta').textContent = `Last updated ${state.updated || '—'} · ${state.members.length} log register mein`;
+    if (canWrite) $('#roster').querySelectorAll('.card').forEach(b => b.addEventListener('click', () => openDrawer(b.dataset.slug)));
+
+    // Fewer scheduled events → more dots fall and go inactive.
+    dots.setWeight(future.length + tba.length);
+  }
+
+  // ---------- Quirk rotator ----------
+  let qi = Math.floor(Math.random() * QUIRKS.length);
+  setInterval(() => {
+    const el = $('#quirk'); qi = (qi + 1) % QUIRKS.length;
+    el.style.opacity = 0; setTimeout(() => { el.textContent = QUIRKS[qi]; el.style.opacity = 1; }, reduced ? 0 : 400);
+  }, 7000);
+
+  // ---------- Particle hero ----------
+  const dots = (() => {
+    const hero = $('#hero'), cv = $('#dots'), ctx = cv.getContext('2d');
+    if (!ctx) { hero.classList.add('no-canvas'); return { setWeight() {} }; }
+    let W = 0, H = 0, dpr = 1, parts = [], targets = [], weight = 0, raf = 0, floor = 0;
+    const css = v => getComputedStyle(document.documentElement).getPropertyValue(v).trim();
+    let colAccent = css('--accent'), colRubble = css('--rubble');
+
+    function sample() {
+      const off = document.createElement('canvas'); off.width = W; off.height = H;
+      const o = off.getContext('2d');
+      let size = Math.min(W * 0.17, 150);
+      o.font = `${size}px "Yatra One", "Baloo 2", sans-serif`;
+      while (o.measureText('Kaun Phasa?').width > W * 0.92 && size > 24) { size -= 4; o.font = `${size}px "Yatra One", "Baloo 2", sans-serif`; }
+      o.fillStyle = '#fff'; o.textAlign = 'center'; o.textBaseline = 'middle';
+      o.fillText('Kaun Phasa?', W / 2, H * 0.44);
+      const img = o.getImageData(0, 0, W, H).data, step = W < 520 ? 4 : 5, t = [];
+      for (let y = 0; y < H; y += step) for (let x = 0; x < W; x += step) if (img[(y * W + x) * 4 + 3] > 128) t.push({ x, y });
+      return t;
+    }
+    function extraCount() { return Math.max(120, Math.min(900, 700 - weight * 60)); }
+    function build() {
+      const r = hero.getBoundingClientRect(); dpr = Math.min(2, devicePixelRatio || 1);
+      W = Math.max(320, Math.floor(r.width)); H = Math.floor(r.height); floor = H - 2;
+      cv.width = W * dpr; cv.height = H * dpr; ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      colAccent = css('--accent'); colRubble = css('--rubble');
+      targets = sample();
+      const n = targets.length + extraCount();
+      parts = [];
+      for (let i = 0; i < n; i++) {
+        const tg = i < targets.length ? targets[i] : null;
+        const p = {
+          x: Math.random() * W, y: -20 - Math.random() * H * 1.5,
+          vx: (Math.random() - .5) * 2, vy: Math.random() * 2,
+          tx: tg ? tg.x : null, ty: tg ? tg.y : null,
+          r: tg ? 1.6 + Math.random() * 0.8 : 1.8 + Math.random() * 1.6,
+          land: floor - Math.random() * 10 - (i % 7), dead: false, delay: Math.random() * 40
+        };
+        if (reduced) { if (tg) { p.x = tg.x; p.y = tg.y; } else { p.dead = true; p.y = p.land; } }
+        parts.push(p);
+      }
+      if (reduced) { draw(); return; }
+      cancelAnimationFrame(raf); raf = requestAnimationFrame(tick);
+    }
+    function tick() {
+      let alive = false;
+      for (const p of parts) {
+        if (p.dead) continue;
+        if (p.delay > 0) { p.delay--; alive = true; continue; }
+        if (p.tx !== null) {
+          p.vx += (p.tx - p.x) * 0.02; p.vy += (p.ty - p.y) * 0.02; p.vx *= 0.86; p.vy *= 0.86;
+          p.x += p.vx; p.y += p.vy;
+          if (Math.abs(p.vx) + Math.abs(p.vy) > 0.05) alive = true; else { p.x = p.tx; p.y = p.ty; }
+        } else {
+          p.vy += 0.35; p.x += p.vx; p.y += p.vy;
+          if (p.x < 2 || p.x > W - 2) p.vx *= -1;
+          if (p.y >= p.land) { p.y = p.land; if (Math.abs(p.vy) > 2.5) { p.vy *= -0.35; p.vx *= 0.7; alive = true; } else p.dead = true; }
+          else alive = true;
+        }
+      }
+      draw();
+      if (alive) raf = requestAnimationFrame(tick);
+    }
+    function draw() {
+      ctx.clearRect(0, 0, W, H);
+      for (const p of parts) {
+        ctx.beginPath(); ctx.arc(p.x, p.y, p.r, 0, 6.2832);
+        ctx.fillStyle = p.tx !== null ? colAccent : (p.dead ? colRubble : colAccent);
+        ctx.globalAlpha = p.dead ? 0.7 : 1;
+        ctx.fill();
+      }
+      ctx.globalAlpha = 1;
+    }
+    let rt; addEventListener('resize', () => { clearTimeout(rt); rt = setTimeout(build, 200); });
+    matchMedia('(prefers-color-scheme: dark)').addEventListener?.('change', () => { colAccent = css('--accent'); colRubble = css('--rubble'); draw(); });
+    const ready = (document.fonts && document.fonts.load) ? document.fonts.load('80px "Yatra One"').catch(() => {}) : Promise.resolve();
+    ready.then(build);
+    return { setWeight(w) { if (w !== weight) { weight = w; if (W) build(); } } };
+  })();
+
+  // ---------- Owner editing ----------
+  let editing = null;
+  function openDrawer(slug) {
+    editing = slug ? state.members.find(m => m.slug === slug) : null;
+    $('#drawerTitle').textContent = editing ? `Edit: ${editing.name}` : 'Naya bakra';
+    $('#f_name').value = editing?.name || ''; $('#f_status').value = editing?.status || 'single';
+    $('#f_partner').value = editing?.partner || ''; $('#f_city').value = editing?.city || '';
+    $('#f_date').value = editing?.weddingDate || ''; $('#f_notes').value = editing?.notes || '';
+    $('#evrows').innerHTML = ''; (editing?.events || []).forEach(addEvRow);
+    $('#delBtn').hidden = !editing; $('#statusMsg').textContent = ''; $('#statusMsg').className = 'status-msg';
+    $('#drawer').hidden = false; $('#drawerBg').hidden = false; $('#f_name').focus();
+  }
+  function closeDrawer() { $('#drawer').hidden = true; $('#drawerBg').hidden = true; }
+  function addEvRow(e = {}) {
+    const i = $('#evrows').children.length;
+    const d = document.createElement('div'); d.className = 'evrow';
+    d.innerHTML = `
+      <select id="ev_type_${i}" aria-label="Event type">${EV_TYPES.map(t => `<option ${t === (e.type || 'Baraat / Pheras') ? 'selected' : ''}>${t}</option>`).join('')}</select>
+      <input id="ev_date_${i}" type="date" value="${esc(e.date || '')}" aria-label="Event date">
+      <input id="ev_venue_${i}" placeholder="venue / shehar" value="${esc(e.venue || '')}" aria-label="Venue">
+      <input id="ev_dress_${i}" placeholder="dress code" value="${esc(e.dress || '')}" aria-label="Dress code">
+      <button type="button" class="btn small danger full">Remove</button>`;
+    d.querySelector('button').addEventListener('click', () => d.remove());
+    $('#evrows').appendChild(d);
+  }
+  function readForm() {
+    const events = [...$('#evrows').children].map(r => ({
+      type: r.querySelector('select').value, date: r.querySelectorAll('input')[0].value,
+      venue: r.querySelectorAll('input')[1].value.trim(), dress: r.querySelectorAll('input')[2].value.trim()
+    })).filter(e => e.date || e.venue);
+    const name = $('#f_name').value.trim();
+    return { slug: editing?.slug || slugify(name), name, status: $('#f_status').value, partner: $('#f_partner').value.trim(),
+      city: $('#f_city').value.trim(), weddingDate: $('#f_date').value, notes: $('#f_notes').value.trim(), events };
+  }
+  async function publish(nextState, msgEl) {
+    const dt = new Date(), pad = n => String(n).padStart(2, '0');
+    nextState.updated = `${dt.getFullYear()}-${pad(dt.getMonth() + 1)}-${pad(dt.getDate())}`;
+    const json = JSON.stringify(nextState).replace(/<\//g, '<\\/');
+    $('#saveBtn').disabled = true; msgEl.textContent = 'Publish ho raha hai…'; msgEl.className = 'status-msg';
+    try {
+      // Prefer the served source (exact skeleton); fall back to the pristine DOM capture.
+      let src = TEMPLATE;
+      try { const r = await fetch(location.href, { cache: 'no-store' }); if (r.ok) { const t = await r.text(); if (LEDGER_RE.test(t)) src = t; } } catch (_) {}
+      if (!LEDGER_RE.test(src)) throw { code: 'template' };
+      const html = src.replace(LEDGER_RE, (_, a, __, c) => `${a}\n${json}\n${c}`);
+      await artifact.publish(html);
+      state = nextState; render(); msgEl.textContent = 'Published. Page reload hoga.';
+    } catch (e) {
+      msgEl.className = 'status-msg err';
+      msgEl.textContent = e?.code === 'conflict' ? 'Kisi aur ne abhi update kiya. Page reload hoke naya version dikhayega.'
+        : (e?.code === 'not_granted' || e?.code === 'not_writer') ? 'Publish ki permission nahi mili.' : 'Publish fail hua. Dubara try karo.';
+    } finally { $('#saveBtn').disabled = false; }
+  }
+  $('#form').addEventListener('submit', ev => {
+    ev.preventDefault();
+    const m = readForm(); if (!m.name) return;
+    const members = state.members.filter(x => x.slug !== m.slug).concat([m]);
+    publish({ ...state, members }, $('#statusMsg'));
+  });
+  $('#delBtn').addEventListener('click', () => {
+    if (!editing) return;
+    const msg = $('#statusMsg');
+    if (msg.dataset.confirm !== editing.slug) { msg.dataset.confirm = editing.slug; msg.textContent = `Pakka hatana hai ${editing.name} ko? Dubara "Hatao" dabao.`; return; }
+    publish({ ...state, members: state.members.filter(x => x.slug !== editing.slug) }, msg).then(closeDrawer);
+  });
+  $('#cancelBtn').addEventListener('click', closeDrawer);
+  $('#drawerBg').addEventListener('click', closeDrawer);
+  $('#addEv').addEventListener('click', () => addEvRow());
+  $('#addBtn').addEventListener('click', () => openDrawer(null));
+  addEventListener('keydown', e => { if (e.key === 'Escape' && !$('#drawer').hidden) closeDrawer(); });
+
+  render();
+
+  // Light up editing for the owner / editors once the runtime answers.
+  (async () => {
+    try {
+      const user = await window.claude?.use?.('user');
+      const ok = user ? await user.canEdit() : false;
+      if (!ok) return;
+      artifact = await window.claude?.use?.('artifact');
+      if (!artifact) return;
+      canWrite = true; $('#ownerbar').hidden = false; render();
+    } catch (_) { /* read-only view */ }
+  })();
+})();
+</script>
+</body>
+</html>
